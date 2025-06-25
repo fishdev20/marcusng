@@ -8,7 +8,16 @@ import logset2 from "@/assets/images/projects/logset2.png";
 import omakala1 from "@/assets/images/projects/omakala1.png";
 import omakala2 from "@/assets/images/projects/omakala2.png";
 import talousvirta from "@/assets/images/projects/talousvirta.png";
-import { ExperienceItem } from "../app/components/experience/ExperienceContent";
+
+export interface ExperienceItem {
+  duration: string;
+  role: string;
+  companyName: string;
+  companyUrl: string;
+  companyLogo: string;
+  highlights: string[];
+  images: any[];
+}
 
 export const experienceData: ExperienceItem[] = [
   {
