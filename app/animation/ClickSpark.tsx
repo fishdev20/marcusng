@@ -158,11 +158,11 @@ const ClickSpark: FC<ClickSparkProps> = ({
   };
 
   return (
-    <div className="relative w-full h-full" onClick={handleClick}>
-      <canvas
+    <div onClick={handleClick}>
+      {/* <canvas
         ref={canvasRef}
         className="w-full h-full block absolute top-0 left-0 select-none pointer-events-none z-50"
-      />
+      /> */}
       {children}
     </div>
   );

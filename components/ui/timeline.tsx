@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform } from "motion/react";
 import React, { useEffect, useRef, useState } from "react";
 
 interface TimelineEntry {
-  title: string;
+  duration: string;
   content: React.ReactNode;
 }
 
@@ -30,9 +30,9 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
 
   return (
     <div className="font-sans" ref={containerRef}>
-      <div className="mx-auto py-20 px-4 md:px-8 lg:px-10">
+      <div className="mx-auto px-4 md:px-8 lg:px-10">
         <FadeUp direction="up" className="flex-col flex justify-center items-center space-y-0">
-          <h1 className="font-incognito text-2xl font-semibold md:text-5xl max-w-4xl">
+          <h1 className="font-incognito text-3xl font-semibold md:text-5xl max-w-4xl">
             Work Experience
           </h1>
         </FadeUp>
@@ -46,13 +46,13 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
                 <div className="h-4 w-4 rounded-full bg-neutral-200 dark:bg-neutral-800 border border-neutral-300 dark:border-neutral-700 p-2" />
               </div>
               <h3 className="hidden md:block text-xl md:pl-20 md:text-3xl font-bold text-neutral-500 dark:text-neutral-300 ">
-                {item.title}
+                {item.duration}
               </h3>
             </div>
 
             <FadeUp direction="up" className="relative pl-20 md:pr-0 md:pl-4 w-full">
               <h3 className="md:hidden block text-2xl mb-4 text-left font-bold text-neutral-300 dark:text-neutral-300">
-                {item.title}
+                {item.duration}
               </h3>
               {item.content}{" "}
             </FadeUp>

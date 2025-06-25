@@ -1,52 +1,136 @@
 "use client";
-import { Slide } from "@/app/animation/Slide";
-import { InteractiveHoverButton } from "@/app/components/share/InteractiveHoverButton";
-import Social from "@/app/components/share/Social";
 
-import VoxelDog from "@/app/components/share/VoxelDog";
-import { LinkPreview } from "@/components/ui/link-preview";
+import { InteractiveHoverButton } from "@/app/components/share/InteractiveHoverButton";
+import GlassWrapper from "@/components/ui/glass-wrapper";
+import SectionWrapper from "@/components/ui/section-wrapper";
+import { experienceData } from "@/constants/experience";
+import { personal } from "@/constants/personal";
+import { Earth, Github, Linkedin, Mail, Phone } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 import { lazy } from "react";
-import Stats from "./Stats";
 
 const Spline = lazy(() => import("@splinetool/react-spline"));
 
 export function HeroSection() {
+  const { name, email, company, github, linkedIn, location, phone, role } = personal;
   return (
-    <section className="h-[100vh-40px] flex flex-col justify-center gap-5 sm:gap-20 mt-15 md:mt-30 mb-20">
-      <div className="flex xl:flex-row flex-col justify-start xl:items-center items-start gap-2 sm:gap-12 md:gap-20">
-        <div className="max-w-xl">
-          <Slide>
-            <h1 className="font-incognito font-semibold tracking-tight text-2xl sm:text-6xl mb-6 lg:leading-[3.7rem] lg:min-w-[900px] leading-tight min-w-full">
-              {"Marcus Nguyen - Software Engineer"}
-            </h1>
-            <h2 className="font-sans text-base sm:text-xl text-neutral-700 dark:text-neutral-300">
+    <SectionWrapper className="h-full justify-center mt-40 md:mt-30 mb-20 md:mb-0">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+        <div className="col-span-1 flex flex-col gap-6 h-full">
+          <Image
+            src="/banner.gif"
+            alt="Contact animation"
+            width={400}
+            height={600}
+            className="w-full rounded-lg object-cover border dark:border-white/20 border-black/20 shadow-lg"
+            unoptimized
+          />
+          <GlassWrapper className="p-6 flex flex-col items-center h-full">
+            <h4 className="text-2xl font-bold">{name}</h4>
+            <p className="text-sm text-gray-500 mb-4">
+              {role}{" "}
+              <Link target="_blank" rel="noopener" href={company.url}>
+                @{company.name}
+              </Link>
+            </p>
+            <p className="flex gap-2">
+              <Earth className="text-blue-500" />
+              {personal.location}
+            </p>
+            <p className="w-full py-4">
               Results-driven Software Engineer with expertise in building high-performance Web,
               Mobile, and Desktop applications. Skilled in modern UI frameworks, full-stack
               development, and performance optimization, with a focus on delivering seamless user
-              experiences and driving engineering excellence. . Currently, I’m focused on building
-              products at{" "}
-              <LinkPreview
-                url="https://triona.fi/"
-                className="font-bold text-red-600 dark:text-red-600 relative no-underline before:content-[''] before:absolute before:w-full before:h-0.5 before:rounded before:bg-red-600 before:bottom-[-3px] before:left-0 before:origin-right before:scale-x-0 before:transition-transform before:duration-300 before:ease-in-out hover:before:origin-left hover:before:scale-x-100"
-              >
-                @Triona Oy
-              </LinkPreview>
-              .
-            </h2>
-          </Slide>
-          <Slide delay={0.1}>
-            <Social />
-          </Slide>
-
-          <Slide delay={0.2}>
-            <InteractiveHoverButton className="rounded-sm">Let's talk</InteractiveHoverButton>
-          </Slide>
+              experiences and driving engineering excellence.
+            </p>
+            <InteractiveHoverButton className="rounded-sm w-full">
+              Let's talk
+            </InteractiveHoverButton>
+          </GlassWrapper>
         </div>
-        <div className="w-full flex justify-center items-center">
-          <VoxelDog />
+
+        <div className="lg:col-span-2 flex flex-col gap-6">
+          <GlassWrapper className="p-6">
+            <h3 className="text-xl md:text-3xl font-semibold mb-4">Work Experience</h3>
+            <div className="space-y-4 text-sm">
+              {experienceData.map((exp, idx) => (
+                <div key={idx}>
+                  <div className="flex items-center gap-2">
+                    <Image
+                      key={idx}
+                      src={exp.companyLogo}
+                      alt={`${exp.companyName} logo ${idx + 1}`}
+                      width={65}
+                      height={65}
+                      className="rounded-md border border-neutral-300 dark:border-neutral-700"
+                    />
+                    <div className="flex flex-col justify-center">
+                      <a
+                        href={exp.companyUrl}
+                        className="hover:underline text-xl font-semibold font-incognito"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {exp.companyName}
+                      </a>
+                      <p className="text-sm text-neutral-300">{exp.role}</p>
+                      <div className="mb-2 text-sm text-blue-400 dark:text-blue-300 font-medium">
+                        {exp.duration}
+                      </div>
+                    </div>
+                  </div>
+                  <ul className="mt-3 list-disc list-inside text-neutral-700 dark:text-neutral-300">
+                    {exp.highlights.map((point, i) => (
+                      <li key={i}>{point}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </GlassWrapper>
+
+          <GlassWrapper className="p-6 flex flex-col md:flex-row gap-6 md:items-center">
+            <h3 className="text-xl md:text-3xl font-semibold text-left">Contact</h3>
+            <div className="flex w-full gap-4 flex-wrap">
+              <div className="flex flex-wrap gap-4">
+                <a
+                  href={`mailto:${personal.email}`}
+                  className="border border-border p-2 rounded-md hover:bg-neutral-200 dark:hover:bg-neutral-500"
+                >
+                  <Mail size={28} className="text-red-600" />
+                </a>
+              </div>
+              <div className="flex items-center gap-2">
+                <a
+                  href={`tel:${personal.phone}`}
+                  className="border border-border p-2 rounded-md hover:bg-neutral-200 dark:hover:bg-neutral-500"
+                >
+                  <Phone size={28} className="text-green-600" />
+                </a>
+              </div>
+              <div className="flex items-center gap-2">
+                <Link
+                  href={personal.github}
+                  target="_blank"
+                  className="border border-border p-2 rounded-md hover:bg-neutral-200 dark:hover:bg-neutral-500"
+                >
+                  <Github size={28} className="text-black dark:text-white" />{" "}
+                </Link>
+              </div>
+              <div className="flex items-center gap-2">
+                <Link
+                  href={personal.linkedIn}
+                  target="_blank"
+                  className="border border-border p-2 rounded-md hover:bg-neutral-200 dark:hover:bg-neutral-500"
+                >
+                  <Linkedin size={28} className="text-[#0077B5]" />
+                </Link>
+              </div>
+            </div>
+          </GlassWrapper>
         </div>
       </div>
-      <Stats />
-    </section>
+    </SectionWrapper>
   );
 }

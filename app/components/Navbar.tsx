@@ -29,8 +29,8 @@ export default function Navbar() {
   ];
 
   return (
-    <header className="sticky top-0 text-sm py-6 md:px-16 px-6 border-b z-30 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="max-w-6xl mx-auto flex items-center justify-between">
+    <header className="flex justify-center items-center fixed top-3 w-full z-50 md:px-16 px-6">
+      <div className="w-full max-w-6xl mx-auto items-center justify-between flex gap-1 p-2 border dark:border-white/20 border-black/20 rounded-lg bg-background/80 backdrop-blur-lg supports-[backdrop-filter]:bg-background/30 shadow-lg">
         <Link href="/">
           <Logo />
         </Link>

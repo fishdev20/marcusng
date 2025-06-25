@@ -5,6 +5,11 @@ const nextConfig: NextConfig = {
   images: {
     domains: [
       "api.microlink.io", // Microlink Image Preview
+      "cdn.sanity.io",
+      "getillustrations.b-cdn.net",
+      "media.licdn.com",
+      "avatars.githubusercontent.com",
+      "media.licdn.com",
     ],
   },
 };
