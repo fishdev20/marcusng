@@ -1,7 +1,10 @@
+"use client";
 import SectionWrapper from "@/components/ui/section-wrapper";
+import { getDevIcon } from "@/lib/utils";
 import Image from "next/image";
 
 export default function Footer() {
+  console.log(getDevIcon("sanity"));
   return (
     <SectionWrapper>
       <footer className="border-t dark:border-zinc-800 border-zinc-100 mt-44 lg:min-h-[250px] min-h-full relative">
@@ -16,7 +19,13 @@ export default function Footer() {
                   target="_blank"
                   className="flex items-center gap-x-2 dark:text-white text-zinc-600 hover:underline"
                 >
-                  <Image src={""} width={20} height={20} alt="sanity logo" /> Sanity
+                  <Image
+                    src={getDevIcon("Sanity") ?? ""}
+                    width={20}
+                    height={20}
+                    alt="sanity logo"
+                  />{" "}
+                  Sanity
                 </a>
               </li>
               <li>
@@ -26,7 +35,13 @@ export default function Footer() {
                   target="_blank"
                   className="flex items-center gap-x-2 dark:text-white text-zinc-600 hover:underline"
                 >
-                  <Image src={""} width={20} height={20} alt="nextjs logo" /> Next.js
+                  <Image
+                    src={getDevIcon("Next.js") ?? ""}
+                    width={20}
+                    height={20}
+                    alt="nextjs logo"
+                  />{" "}
+                  Next.js
                 </a>
               </li>
               <li>
@@ -36,7 +51,13 @@ export default function Footer() {
                   target="_blank"
                   className="flex items-center gap-x-2 dark:text-white text-zinc-600 hover:underline"
                 >
-                  <Image src={""} width={20} height={20} alt="vercel logo" /> Vercel
+                  <Image
+                    src={getDevIcon("Vercel") ?? ""}
+                    width={20}
+                    height={20}
+                    alt="vercel logo"
+                  />{" "}
+                  Vercel
                 </a>
               </li>
             </ul>

@@ -1,4 +1,5 @@
 import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
+import { Button } from "@/components/ui/button";
 import SectionWrapper from "@/components/ui/section-wrapper";
 import { client } from "@/lib/sanity";
 import { formatDate } from "@/lib/utils";
@@ -32,7 +33,7 @@ async function getData() {
 export default async function BlogsSection() {
   const data: IBlogCard[] = await getData();
   return (
-    <SectionWrapper title="Blogs">
+    <SectionWrapper title="Blogs" className="z-50">
       <BentoGrid className="md:auto-rows-[20rem]">
         {data.map((item: IBlogCard, idx: number) => (
           <BentoGridItem
@@ -47,7 +48,11 @@ export default async function BlogsSection() {
           />
         ))}
       </BentoGrid>
-      <Link href={"#"}>Read more</Link>
+      <Button className="z-50 md:w-[32%] w-full self-center" variant={"outline"}>
+        <Link href={"/blog"} prefetch={false} className="w-full">
+          {"Read more"}
+        </Link>
+      </Button>
     </SectionWrapper>
   );
 }

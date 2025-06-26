@@ -1,10 +1,13 @@
 "use client";
-import { getSkillIcon } from "@/app/components/skills/utils";
+
 import useIsSmallScreen from "@/app/hooks/useMediaQuery";
 import GlassWrapper from "@/components/ui/glass-wrapper";
+import { GlowingEffect } from "@/components/ui/glowing-effect";
 import SectionWrapper from "@/components/ui/section-wrapper";
 import { skills } from "@/constants/skill";
-import { FaTools } from "react-icons/fa";
+import { getDevIcon } from "@/lib/utils";
+import { Brain } from "lucide-react";
+import Image from "next/image";
 
 export default function SkillsSection() {
   const isSmall = useIsSmallScreen();
@@ -18,15 +21,25 @@ export default function SkillsSection() {
               className={`p-4 sticky sm:relative`}
               style={isSmall ? { top: `calc(100px + ${idx * 60}px)` } : {}}
             >
-              <h2 className="text-lg font-semibold capitalize text-blue-600 dark:text-blue-400 mb-4">
+              <GlowingEffect
+                blur={0}
+                borderWidth={3}
+                spread={80}
+                glow={true}
+                disabled={false}
+                proximity={64}
+                inactiveZone={0.01}
+              />
+              <h4 className="text-lg font-semibold capitalize text-blue-600 dark:text-blue-400 mb-4">
                 {category}
-              </h2>
+              </h4>
               <ul className="list-disc list-inside text-neutral-700 dark:text-neutral-300 space-y-2">
                 {items.map((skill) => {
-                  const Icon = getSkillIcon(skill) ?? FaTools;
+                  const iconUrl = getDevIcon(skill);
                   return (
                     <li key={skill} className="flex items-center gap-2">
-                      <Icon className="text-blue-500 dark:text-blue-400 w-6 h-6" />
+                      {iconUrl && <Image alt={skill} src={iconUrl} width={30} height={30} />}
+                      {!iconUrl && <Brain className="w-7 h-7" />}
                       {skill}
                     </li>
                   );

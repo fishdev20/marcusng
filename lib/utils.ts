@@ -121,3 +121,46 @@ export const formatDate = (value: string) => {
   const formattedDate = new Intl.DateTimeFormat("en-US", options).format(date);
   return formattedDate;
 };
+
+export const getDevIcon = (skill: string): string | null => {
+  const map: Record<string, string> = {
+    JavaScript: "javascript",
+    TypeScript: "typescript",
+    Java: "java",
+    Go: "go",
+    HTML: "html5",
+    CSS: "css3",
+    React: "react",
+    "Next.js": "nextjs",
+    Redux: "redux",
+    "React Query": "react",
+    "Tailwind CSS": "tailwindcss",
+    SASS: "sass",
+    MUI: "materialui",
+    "Ant Design": "antdesign",
+    "Node.js": "nodejs",
+    Springboot: "spring",
+    Firebase: "firebase",
+    MongoDB: "mongodb",
+    PostgreSQL: "postgresql",
+    SQLite: "sqlite",
+    Docker: "docker",
+    AWS: "amazonwebservices",
+    Git: "git",
+    GitHub: "github",
+    GitLab: "gitlab",
+    Redis: "redis",
+    Sanity: "sanity",
+    Vercel: "vercel",
+  };
+
+  const deviconName = map[skill];
+  if (!deviconName) return null;
+
+  // List of known exceptions that need -original-wordmark.svg instead
+  const useWordmark: string[] = ["amazonwebservices"];
+
+  const suffix = useWordmark.includes(deviconName) ? "-original-wordmark.svg" : "-original.svg";
+
+  return `https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/${deviconName}/${deviconName}${suffix}`;
+};

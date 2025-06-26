@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import React from "react";
 import GlassWrapper from "./glass-wrapper";
+import { GlowingEffect } from "./glowing-effect";
 
 export const BentoGrid = ({
   className,
@@ -40,37 +41,50 @@ export const BentoGridItem = ({
   return (
     <GlassWrapper
       className={cn(
-        "group/bento shadow-input flex flex-col justify-start space-y-3 transition duration-200 hover:shadow-xl dark:shadow-none p-5",
+        "group/bento shadow-input flex flex-col justify-start space-y-3 transition duration-200 hover:shadow-xl dark:shadow-none relative cursor-pointer",
         className,
       )}
     >
-      {/* Title */}
-      <h6 className="text-xl font-bold text-black dark:text-white line-clamp-2 leading-relaxed">
-        {header}
-      </h6>
+      <div className="relative w-full h-full p-5 rounded-lg">
+        <GlowingEffect
+          blur={0}
+          borderWidth={3}
+          spread={80}
+          glow={true}
+          disabled={false}
+          proximity={64}
+          inactiveZone={0.01}
+        />
+        {/* Title */}
+        <h4 className="group-hover/bento:translate-x-2 transition duration-200 text-xl font-bold line-clamp-2 leading-relaxed">
+          {header}
+        </h4>
 
-      {/* Image */}
-      {imageUrl && (
-        <div className="relative w-full h-28 overflow-hidden rounded-md bg-gray-100 dark:bg-neutral-700">
-          <Image
-            src={imageUrl}
-            alt="Blog Preview"
-            fill
-            className="object-cover"
-            sizes="(max-width: 768px) 100vw, 33vw"
-          />
-        </div>
-      )}
+        {/* Image */}
+        {imageUrl && (
+          <div className="relative w-full h-28 overflow-hidden rounded-md bg-gray-100 dark:bg-neutral-700">
+            <Image
+              src={imageUrl}
+              alt="Blog Preview"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 33vw"
+            />
+          </div>
+        )}
 
-      {/* Date */}
-      {date && <div className="text-sm font-semibold text-blue-600 dark:text-blue-300">{date}</div>}
+        {/* Date */}
+        {date && (
+          <div className="text-sm font-semibold text-blue-600 dark:text-blue-300">{date}</div>
+        )}
 
-      {/* Description */}
-      {description && (
-        <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed line-clamp-2">
-          {description}
-        </p>
-      )}
+        {/* Description */}
+        {description && (
+          <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed line-clamp-2">
+            {description}
+          </p>
+        )}
+      </div>
     </GlassWrapper>
   );
 };

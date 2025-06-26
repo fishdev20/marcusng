@@ -1,6 +1,7 @@
 "use client";
 
 import { InteractiveHoverButton } from "@/app/components/share/InteractiveHoverButton";
+import VoxelDog from "@/app/components/share/VoxelDog";
 import GlassWrapper from "@/components/ui/glass-wrapper";
 import SectionWrapper from "@/components/ui/section-wrapper";
 import { experienceData } from "@/constants/experience";
@@ -24,9 +25,9 @@ export function HeroSection() {
             width={400}
             height={600}
             className="w-full rounded-lg object-cover border dark:border-white/20 border-black/20 shadow-lg"
-            unoptimized
           />
           <GlassWrapper className="p-6 flex flex-col items-center h-full">
+            <VoxelDog />
             <h4 className="text-2xl font-bold">{name}</h4>
             <p className="text-sm text-gray-500 mb-4">
               {role}{" "}
@@ -74,7 +75,7 @@ export function HeroSection() {
                       >
                         {exp.companyName}
                       </a>
-                      <p className="text-sm text-neutral-300">{exp.role}</p>
+                      <p className="text-sm text-neutral-500 dark:text-neutral-300">{exp.role}</p>
                       <div className="mb-2 text-sm text-blue-400 dark:text-blue-300 font-medium">
                         {exp.duration}
                       </div>

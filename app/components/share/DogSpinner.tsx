@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils"; // assuming you're using the default shadcn setup
+import { cn } from "@/lib/utils";
 import { forwardRef } from "react";
 
 export const DogSpinner = () => (
@@ -13,10 +13,10 @@ export const DogContainer = forwardRef<HTMLDivElement, { children: React.ReactNo
       ref={ref}
       className={cn(
         "relative mx-auto",
-        "mt-[-20px] sm:mt-[-60px] md:mt-[-120px]",
-        "mb-[-40px] sm:mb-[-140px] md:mb-[-200px]",
-        "w-[320px] sm:w-[360px] md:w-[480px]",
-        "h-[320px] sm:h-[360px] md:h-[480px]",
+        // "mt-[-20px] sm:mt-[-60px] md:mt-[-120px]",
+        // "mb-[-40px] sm:mb-[-140px] md:mb-[-200px]",
+        "w-[160px] sm:w-[240px] md:w-[180px]",
+        "h-[160px] sm:h-[240px] md:h-[180px]",
       )}
     >
       {children}
