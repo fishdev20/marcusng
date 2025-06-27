@@ -1,7 +1,7 @@
 "use client";
 
 import { ThemeProvider } from "next-themes";
-import ClickSpark from "./animation/ClickSpark";
+import ClickSpark from "./components/animation/ClickSpark";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (

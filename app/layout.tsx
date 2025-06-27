@@ -1,3 +1,4 @@
+import { AuroraBackground } from "@/components/ui/aurora-background";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter } from "next/font/google";
 import { gitlabmono, incognito } from "../assets/font/font";
@@ -36,6 +37,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${incognito.variable} ${inter.className} ${gitlabmono.variable} relative`}>
         <Providers>
+          <AuroraBackground />
           <Navbar />
           {children}
           <Footer />

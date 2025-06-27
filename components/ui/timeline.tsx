@@ -1,5 +1,5 @@
 "use client";
-import { FadeUp } from "@/app/animation/FadeUp";
+import { FadeUp } from "@/app/components/animation/FadeUp";
 import { motion, useScroll, useTransform } from "motion/react";
 import React, { useEffect, useRef, useState } from "react";
 

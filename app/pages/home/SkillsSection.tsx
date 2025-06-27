@@ -13,7 +13,7 @@ export default function SkillsSection() {
   const isSmall = useIsSmallScreen();
   return (
     <SectionWrapper title="Skills" className="my-20">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {Object.entries(skills).map(([category, items], idx) => {
           return (
             <GlassWrapper

@@ -28,8 +28,10 @@ export const experienceData: ExperienceItem[] = [
     companyLogo:
       "https://media.licdn.com/dms/image/v2/C4D0BAQFuBcg1EBKA6Q/company-logo_200_200/company-logo_200_200/0/1631306613470?e=1756339200&v=beta&t=9lmjw1NmmkJWfuUdR4NkyyhuwJ2tBsWYJsEm74DG2EE",
     highlights: [
+      "Full-stack development of a desktop app for forwarders to optimize wood harvesting.",
       "Led frontend development of a desktop app for forwarders to optimize wood harvesting.",
       "Led performance audits and optimization on low-end hardware.",
+      "Led UI migration from MUI to Tailwindcss.",
       "Reduced bundle size and improved FCP using dynamic imports and code-splitting.",
       "Familiar with OpenLayers performance tuning and map layer management.",
     ],
@@ -46,6 +48,7 @@ export const experienceData: ExperienceItem[] = [
       "Developed highly intuitive and responsive billing and invoicing services dashboard.",
       "Diagnosed and resolved complex bugs, improving app stability.",
       "Refactored and optimized internal projects for maintainability.",
+      "Led migration from Javascript to Typescript.",
       "Collaborated with C#/.NET teams to deliver robust web solutions.",
     ],
     images: [kassavirtanen, talousvirta],
