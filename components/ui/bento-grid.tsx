@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import GlassWrapper from "./glass-wrapper";
 import { GlowingEffect } from "./glowing-effect";
@@ -30,6 +31,7 @@ export const BentoGridItem = ({
   header,
   imageUrl,
   icon,
+  href,
 }: {
   className?: string;
   date?: string | React.ReactNode;
@@ -37,6 +39,7 @@ export const BentoGridItem = ({
   header?: React.ReactNode;
   imageUrl: string;
   icon?: React.ReactNode;
+  href: string;
 }) => {
   return (
     <GlassWrapper
@@ -45,7 +48,7 @@ export const BentoGridItem = ({
         className,
       )}
     >
-      <div className="relative w-full h-full p-5 rounded-lg">
+      <Link href={href} className="relative w-full h-full p-5 rounded-lg flex flex-col gap-2">
         <GlowingEffect
           blur={0}
           borderWidth={3}
@@ -84,7 +87,7 @@ export const BentoGridItem = ({
             {description}
           </p>
         )}
-      </div>
+      </Link>
     </GlassWrapper>
   );
 };

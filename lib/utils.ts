@@ -134,7 +134,7 @@ export const getDevIcon = (skill: string): string | null => {
     nextjs: "nextjs",
     redux: "redux",
     "react query": "react",
-    tailwindcss: "tailwindcss",
+    "tailwind css": "tailwindcss",
     sass: "sass",
     mui: "materialui",
     antdesign: "antdesign",
@@ -163,6 +163,7 @@ export const getDevIcon = (skill: string): string | null => {
     "c++": "cplusplus",
     ".net": "dotnetcore",
     googlecloud: "googlecloud",
+    "ant design": "antdesign",
   };
 
   const deviconName = map[skill];

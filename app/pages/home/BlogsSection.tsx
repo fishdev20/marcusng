@@ -45,6 +45,7 @@ export default async function BlogsSection() {
             className={
               idx === 0 || idx === 6 ? "md:col-span-2 !bg-yellow-100/40 !dark:bg-yellow-500/10" : ""
             }
+            href={`https://marcusng-blog.vercel.app/blog/${item.slug}`}
           />
         ))}
       </BentoGrid>

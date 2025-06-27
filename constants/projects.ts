@@ -20,7 +20,7 @@ export const projects: Project[] = [
       "zustand",
       "mui",
       "openLayer",
-      "tailwindcss",
+      "tailwind css",
       "typescript",
       "sqlite",
       "prisma",
