@@ -1,4 +1,5 @@
 import { FlatCompat } from "@eslint/eslintrc";
+import prettierPlugin from "eslint-plugin-prettier";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 
@@ -17,12 +18,20 @@ const eslintConfig = [
       prettier: prettierPlugin,
     },
     rules: {
-      "prettier/prettier": "error",
+      // ✅ Tell Prettier to allow CRLF
+      "prettier/prettier": [
+        "error",
+        {
+          endOfLine: "crlf",
+          semi: true,
+          singleQuote: false,
+          trailingComma: "all",
+          printWidth: 100,
+          tabWidth: 2,
+          arrowParens: "always",
+        },
+      ],
     },
-  },
-
-  {
-    rules: prettierConfig.rules,
   },
 ];
 

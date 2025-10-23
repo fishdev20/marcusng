@@ -30,7 +30,7 @@ export default async function ExperienceSection() {
           ) => (
             <div key={index} className="relative pl-10 pb-12 last:pb-0">
               <div className="absolute left-px -translate-x-1/2 h-9 w-9 md:h-12 md:w-12 flex items-center justify-center rounded-full bg-accent ring-8 ring-background">
-                <Image src={logo?.url} fill alt="logo" className="rounded-full" />
+                <Image src={logo?.url as string} fill alt="logo" className="rounded-full" />
               </div>
 
               <div className="pt-2 sm:pt-1 space-y-3">
@@ -54,7 +54,8 @@ export default async function ExperienceSection() {
                   <div className="flex items-center gap-2 mt-2 text-xs md:text-base text-muted-foreground">
                     <CalendarDays className="h-4 w-4" />
                     <span>
-                      {formatDate(startDate)} - {isCurrent ? "present" : formatDate(endDate)}
+                      {formatDate(startDate)} -{" "}
+                      {isCurrent ? "present" : formatDate(endDate as string)}
                     </span>
                   </div>
                 </div>

@@ -11,8 +11,8 @@ export default function AboutPage() {
           problem-solving and continuous learning.
         </p>
         <p className="mt-4 text-lg text-gray-700">
-          Feel free to explore my projects and get in touch if you'd like to collaborate or learn
-          more about my work!
+          Feel free to explore my projects and get in touch if you&apos;d like to collaborate or
+          learn more about my work!
         </p>
       </div>
     </SectionWrapper>

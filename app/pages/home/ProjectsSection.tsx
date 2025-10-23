@@ -19,7 +19,7 @@ export default async function ProjectsSection() {
         </p>
 
         <div className="mt-8 md:mt-16 w-full mx-auto space-y-12">
-          {projects.map((project, index) => (
+          {projects.map((project) => (
             <div
               key={project._id}
               className="flex flex-col md:flex-row items-center justify-between gap-y-6 md:even:flex-row-reverse"

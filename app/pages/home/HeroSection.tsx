@@ -9,9 +9,7 @@ export async function HeroSection() {
 
   return (
     <section className="w-full h-full flex flex-col lg:flex-row justify-center md:justify-between gap-10 max-w-6xl mx-auto px-6 my-32">
-      {/* Left Column */}
       <div className="flex flex-1 flex-col text-left max-w-xl space-y-10 mt-0 md:mt-20">
-        {/* Headline */}
         <div className="space-y-4 leading-[0.9]">
           <h1 className="font-extrabold leading-[0.9] tracking-tight">
             {/* Desktop / Tablet layout */}
@@ -37,7 +35,6 @@ export async function HeroSection() {
           </h1>
         </div>
 
-        {/* Call to action */}
         <Link
           href={`mailto:${profile.email}`}
           className="inline-flex items-center gap-2 text-lg font-medium underline underline-offset-4 hover:no-underline transition"
@@ -47,14 +44,11 @@ export async function HeroSection() {
         </Link>
       </div>
 
-      {/* Right Column */}
       <div className="flex flex-col items-center lg:items-end lg:mt-0 w-full">
         <div className="max-w-md w-full">
           <div className="flex flex-row gap-4">
-            {/* Profile Image */}
             {profile.profileImage?.url && <PixelImage src={profile.profileImage.url} />}
 
-            {/* Navigation */}
             <ul className="text-sm text-muted-foreground space-y-1 mt-4">
               <li>
                 <Link href="#about" className="hover:text-neutral-800 dark:hover:text-white">
@@ -79,7 +73,6 @@ export async function HeroSection() {
             </ul>
           </div>
 
-          {/* Info Section */}
           <div className="p-6 space-y-3">
             <h2 className="text-xl font-bold uppercase text-neutral-900 dark:text-white">
               <CharacterFadeUpText text={profile.fullName} stagger={0.04} delay={0.5} />
@@ -108,7 +101,6 @@ export async function HeroSection() {
               )}
             </div>
 
-            {/* Social Links */}
             <div className="flex items-center gap-4 pt-4">
               {profile.socialLinks?.github && (
                 <Link

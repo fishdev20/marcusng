@@ -30,7 +30,7 @@ export const BentoGridItem = ({
   description,
   header,
   imageUrl,
-  icon,
+  // icon,
   href,
 }: {
   className?: string;

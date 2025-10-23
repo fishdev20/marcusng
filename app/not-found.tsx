@@ -10,7 +10,7 @@ export default function NotFound() {
             404 Page Not Found
           </h1>
           <p className="font-sans text-gray-500">
-            Sorry, we couldn't find the page you&#x27;re looking for.
+            Sorry, we couldn&apos;t find the page you&#x27;re looking for.
           </p>
         </div>
         <Button variant={"outline"}>

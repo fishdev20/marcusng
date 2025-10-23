@@ -41,7 +41,7 @@ export default function ContactSection() {
   return (
     <div className="h-full flex items-center justify-center py-16">
       <div className="w-full max-w-5xl mx-auto px-6 xl:px-0">
-        <h1 className="mt-3 text-3xl md:text-4xl font-semibold tracking-tight">Let's Talk</h1>
+        <h1 className="mt-3 text-3xl md:text-4xl font-semibold tracking-tight">Let&apos;s Talk</h1>
         <p className="mt-3 text-base sm:text-lg text-muted-foreground">
           I&apos;d love to hear from you. Please fill out this form or shoot me an email.
         </p>
