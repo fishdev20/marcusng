@@ -176,3 +176,18 @@ export const getDevIcon = (skill: string): string | null => {
 
   return `https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/${deviconName}/${deviconName}${suffix}`;
 };
+
+// export function formatDate(dateString?: string): string {
+//   if (!dateString) return "";
+
+//   const date = new Date(dateString);
+
+//   // Handle invalid dates gracefully
+//   if (isNaN(date.getTime())) return "";
+
+//   const day = date.getDate().toString().padStart(2, "0");
+//   const month = (date.getMonth() + 1).toString().padStart(2, "0");
+//   const year = date.getFullYear();
+
+//   return `${day}.${month}.${year}`;
+// }

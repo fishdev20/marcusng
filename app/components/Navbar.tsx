@@ -29,7 +29,7 @@ export default function Navbar() {
   ];
 
   return (
-    <header className="flex justify-center items-center fixed top-3 w-full z-50 md:px-16 px-6">
+    <header className="flex justify-center items-center fixed top-3 w-full z-50 px-6">
       <div className="w-full max-w-6xl mx-auto items-center justify-between flex gap-1 p-2 border dark:border-white/20 border-black/20 rounded-lg bg-background/80 backdrop-blur-lg supports-[backdrop-filter]:bg-background/30 shadow-lg">
         <Link href="/">
           <Logo />

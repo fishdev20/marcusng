@@ -1,13 +1,21 @@
-import { StaticImageData } from "next/image";
-
-export type ProjectType = "Featured" | "Solo";
 export interface Project {
-  name: string;
-  type: ProjectType;
-  role?: string;
-  url?: string;
-  github?: string;
-  desc: string;
-  stack: string[];
-  images: StaticImageData[];
+  _id: string;
+  title: string;
+  featured: boolean;
+  description: string;
+  thumbnail?: {
+    url: string;
+    alt?: string;
+  };
+  techStack?: {
+    name: string;
+    icon?: string;
+  }[];
+  links?: {
+    github?: string;
+    liveDemo?: string;
+    video?: string;
+  };
+  tags?: string[];
+  date?: string;
 }

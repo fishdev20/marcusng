@@ -1,11 +1,7 @@
-import { AuroraBackground } from "@/components/ui/aurora-background";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { gitlabmono, incognito } from "../assets/font/font";
-import Navbar from "./components/Navbar";
-import Footer from "./components/footer/Footer";
 import "./globals.css";
-import { Providers } from "./providers";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -30,12 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${incognito.variable} ${inter.className} ${gitlabmono.variable} relative`}>
-        <Providers>
-          <AuroraBackground />
-          <Navbar />
-          {children}
-          <Footer />
-        </Providers>
+        {children}
       </body>
     </html>
   );
