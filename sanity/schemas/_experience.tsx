@@ -104,7 +104,8 @@ const experience = {
       subtitle: "role",
       media: "logo",
     },
-    prepare(selection) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    prepare(selection: any) {
       const { title, subtitle, media } = selection;
       return {
         title,

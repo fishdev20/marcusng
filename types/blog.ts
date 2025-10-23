@@ -7,6 +7,7 @@ export interface IBlogCard {
   };
   categories: string;
   smallDesc: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   mainImage: any;
 }
 
@@ -19,7 +20,9 @@ export interface IBlogArticle {
   };
   categories: string;
   smallDesc: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   mainImage: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   body: any;
   headings: string[];
 }

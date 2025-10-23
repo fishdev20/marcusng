@@ -10,6 +10,7 @@ export interface Profile {
   };
   shortBio?: string;
   location?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   fullBio?: any[];
   email?: string;
   resumeURL?: string;
