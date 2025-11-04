@@ -4,11 +4,11 @@ import { getPetBySlug } from "@/sanity/lib/query";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
-interface Props {
+interface ProjectPageProps {
   params: { slug: string };
 }
 
-export default async function ProjectDetails({ params }: Props) {
+export default async function ProjectDetails({ params }: ProjectPageProps) {
   const pet = await getPetBySlug(params.slug);
   if (!pet) return notFound();
   console.log(pet);
