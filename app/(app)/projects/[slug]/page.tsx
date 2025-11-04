@@ -11,12 +11,13 @@ interface Props {
 export default async function ProjectDetails({ params }: Props) {
   const pet = await getPetBySlug(params.slug);
   if (!pet) return notFound();
+  console.log(pet);
   return (
     <SectionWrapper>
       <article>
-        {pet.coverImage?.asset?.url && (
+        {pet.coverImage?.url && (
           <Image
-            src={pet.coverImage.asset.url}
+            src={pet.coverImage.url}
             alt={pet.coverImage.alt || pet.name}
             width={1000}
             height={600}

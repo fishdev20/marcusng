@@ -6,17 +6,32 @@ export interface Tech {
 export interface Pet {
   _id: string;
   name: string;
-  slug: { current: string };
+  slug: string; // now simplified from slug.current
   logo?: {
-    asset: { url: string };
+    url?: string;
+    alt?: string;
   };
   projectUrl?: string;
   repository?: string;
   coverImage?: {
+    url?: string;
     alt?: string;
-    asset: { url: string };
   };
   category?: "web" | "mobile" | "desktop" | "ai" | "game";
   techStack?: Tech[];
-  description?: any[]; // Portable Text blocks
+  description?: Array<
+    | {
+        _type: "block";
+        children: Array<{ _key: string; text: string; marks?: string[] }>;
+      }
+    | {
+        _type: "image";
+        url: string;
+        alt?: string;
+      }
+    | {
+        _type: "table";
+        rows?: { _key: string; cells: string[] }[];
+      }
+  >;
 }

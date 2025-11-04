@@ -96,17 +96,30 @@ export async function getPetBySlug(slug: string): Promise<Pet | null> {
     groq`*[_type == "pet" && slug.current == $slug][0]{
       _id,
       name,
-      slug,
-      logo { asset-> { url } },
+      "slug": slug.current,
+      "logo": {
+        "url": logo.asset->url,
+        "alt": logo.alt
+      },
+      "coverImage": {
+        "url": coverImage.asset->url,
+        "alt": coverImage.alt
+      },
       projectUrl,
       repository,
-      coverImage { alt, asset-> { url } },
       category,
-      techStack[] {
+      techStack[]{
         name,
         icon
       },
-      description
+      // include all block content (including image/table blocks)
+      description[]{
+        ...,
+        _type == "image" => {
+          ...,
+          "url": asset->url
+        }
+      }
     }`,
     { slug },
   );

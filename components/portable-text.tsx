@@ -5,18 +5,24 @@ import Image from "next/image";
 
 const components: PortableTextComponents = {
   types: {
-    image: ({ value }) =>
-      value?.asset?.url ? (
-        <div className="my-6">
-          <Image
-            src={value.asset.url}
-            alt={value.alt || "Project image"}
-            width={800}
-            height={500}
-            className="rounded-lg object-cover"
-          />
-        </div>
-      ) : null,
+    image: ({ value }) => {
+      console.log(value);
+      return (
+        <>
+          {value?.url ? (
+            <div className="my-6">
+              <Image
+                src={value.url}
+                alt={value.alt || "Project image"}
+                width={800}
+                height={500}
+                className="rounded-lg object-cover"
+              />
+            </div>
+          ) : null}
+        </>
+      );
+    },
 
     // ✅ Sanity Table Renderer
     table: ({ value }) => {
@@ -82,6 +88,7 @@ const components: PortableTextComponents = {
 };
 
 // ✅ Named export
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function PortableBlock({ value }: { value: any }) {
   return (
     <div className="prose dark:prose-invert max-w-none">
