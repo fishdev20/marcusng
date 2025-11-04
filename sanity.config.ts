@@ -1,3 +1,4 @@
+import { table } from "@sanity/table";
 import { defineConfig } from "sanity";
 import { deskTool } from "sanity/desk";
 import { dataset, projectId } from "./sanity/env";
@@ -8,6 +9,6 @@ export default defineConfig({
   projectId,
   dataset,
   basePath: "/studio",
-  plugins: [deskTool()],
+  plugins: [deskTool(), table()],
   schema: { types: schema.types },
 });

@@ -1,5 +1,6 @@
 import { client } from "@/lib/sanity";
 import { Experience } from "@/types/experience";
+import { Pet } from "@/types/pet";
 import { Profile } from "@/types/profile";
 import type { Project } from "@/types/project";
 import { groq } from "next-sanity";
@@ -67,5 +68,46 @@ export async function getProjects(): Promise<Project[]> {
       date,
       _createdAt
     }`,
+  );
+}
+
+export async function getAllPets(): Promise<Pet[]> {
+  return client.fetch(
+    groq`*[_type == "pet"] | order(_createdAt asc) {
+      _id,
+      name,
+      slug,
+      logo { asset-> { url } },
+      projectUrl,
+      repository,
+      coverImage { alt, asset-> { url } },
+      category,
+      techStack[] {
+        name,
+        icon
+      },
+      description
+    }`,
+  );
+}
+
+export async function getPetBySlug(slug: string): Promise<Pet | null> {
+  return client.fetch(
+    groq`*[_type == "pet" && slug.current == $slug][0]{
+      _id,
+      name,
+      slug,
+      logo { asset-> { url } },
+      projectUrl,
+      repository,
+      coverImage { alt, asset-> { url } },
+      category,
+      techStack[] {
+        name,
+        icon
+      },
+      description
+    }`,
+    { slug },
   );
 }

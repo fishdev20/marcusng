@@ -56,6 +56,49 @@ const pet = {
         },
       ],
     },
+    {
+      name: "category",
+      title: "Category",
+      type: "string",
+      options: {
+        list: [
+          { title: "Web App", value: "web" },
+          { title: "Mobile App", value: "mobile" },
+          { title: "Desktop App", value: "desktop" },
+          { title: "AI / Data", value: "ai" },
+          { title: "Game / Visualization", value: "game" },
+        ],
+        layout: "dropdown",
+      },
+      description: "Used to group projects by type or focus area.",
+    },
+    {
+      name: "techStack",
+      title: "Tech Stack",
+      type: "array",
+      of: [
+        defineField({
+          name: "tech",
+          title: "Technology",
+          type: "object",
+          fields: [
+            {
+              name: "name",
+              title: "Name",
+              type: "string",
+              validation: (Rule) => Rule.required(),
+            },
+            {
+              name: "icon",
+              title: "Icon URL",
+              type: "url",
+              description: "Optional: add a logo/icon link for display.",
+            },
+          ],
+        }),
+      ],
+      description: "Technologies, tools, or frameworks used in this project.",
+    },
     defineField({
       name: "description",
       title: "Description",
@@ -116,6 +159,11 @@ const pet = {
               title: "Alternative Text",
             },
           ],
+        }),
+        defineArrayMember({
+          type: "table",
+          title: "Table",
+          description: "Insert a data table (requires @sanity/table plugin).",
         }),
       ],
     }),
