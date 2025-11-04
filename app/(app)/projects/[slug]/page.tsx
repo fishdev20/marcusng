@@ -4,34 +4,38 @@ import { getPetBySlug } from "@/sanity/lib/query";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
-type ParamsType = { slug: string } | Promise<{ slug: string }>;
+type Params = Promise<{ slug: string }>;
 
-interface ProjectPageProps {
-  params: ParamsType;
-}
-
-export default async function ProjectDetails({ params }: ProjectPageProps) {
-  const resolved = await params;
-  const pet = await getPetBySlug(resolved.slug);
+export default async function ProjectDetails(props: { params: Params }) {
+  const params = await props.params;
+  const pet = await getPetBySlug(params.slug);
   if (!pet) return notFound();
-  console.log(pet);
+
   return (
     <SectionWrapper>
-      <article>
+      <article className="max-w-4xl mx-auto">
         {pet.coverImage?.url && (
-          <Image
-            src={pet.coverImage.url}
-            alt={pet.coverImage.alt || pet.name}
-            width={1000}
-            height={600}
-            className="rounded-xl object-cover mb-8"
-          />
+          <div className="flex justify-center mb-8">
+            <Image
+              src={pet.coverImage.url}
+              alt={pet.coverImage.alt || pet.name}
+              width={1000}
+              height={600}
+              className="rounded-xl object-cover w-full max-w-3xl border border-border shadow-sm"
+              priority
+            />
+          </div>
         )}
-        <h1 className="text-4xl font-bold mb-4">{pet.name}</h1>
+
+        <h1 className="text-4xl font-bold mb-4 text-center">{pet.name}</h1>
+
         {pet.category && (
-          <p className="text-sm text-muted-foreground mb-4 capitalize">{pet.category}</p>
+          <p className="text-sm text-muted-foreground mb-4 capitalize text-center">
+            {pet.category}
+          </p>
         )}
-        <div className="flex flex-wrap gap-2 mb-6">
+
+        <div className="flex flex-wrap justify-center gap-2 mb-8">
           {pet.techStack?.map((tech) => (
             <span
               key={tech.name}
@@ -41,19 +45,31 @@ export default async function ProjectDetails({ params }: ProjectPageProps) {
             </span>
           ))}
         </div>
+
         {pet.description && (
-          <div className="prose dark:prose-invert max-w-none">
+          <div className="prose dark:prose-invert max-w-none mx-auto">
             <PortableBlock value={pet.description} />
           </div>
         )}
-        <div className="mt-8 flex gap-4">
+
+        <div className="mt-8 flex justify-center gap-6">
           {pet.projectUrl && (
-            <a href={pet.projectUrl} target="_blank" rel="noopener" className="underline">
+            <a
+              href={pet.projectUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary underline underline-offset-4 hover:no-underline"
+            >
               Live Demo
             </a>
           )}
           {pet.repository && (
-            <a href={pet.repository} target="_blank" rel="noopener" className="underline">
+            <a
+              href={pet.repository}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary underline underline-offset-4 hover:no-underline"
+            >
               GitHub
             </a>
           )}
