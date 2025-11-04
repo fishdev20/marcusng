@@ -76,11 +76,20 @@ export async function getAllPets(): Promise<Pet[]> {
     groq`*[_type == "pet"] | order(_createdAt asc) {
       _id,
       name,
-      slug,
-      logo { asset-> { url } },
+      "slug": slug { current },
+      logo {
+        "asset": asset->{
+          "url": url
+        }
+      },
       projectUrl,
       repository,
-      coverImage { alt, asset-> { url } },
+      coverImage {
+        alt,
+        "asset": asset->{
+          "url": url
+        }
+      },
       category,
       techStack[] {
         name,

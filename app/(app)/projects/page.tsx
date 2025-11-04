@@ -11,11 +11,11 @@ export default async function ProjectsPage() {
 
       <div className="grid md:grid-cols-2 gap-12">
         {pets.map((pet) => (
-          <Link key={pet._id} href={`/projects/${pet.slug.current}`} className="group">
+          <Link key={pet._id} href={`/projects/${pet.slug}`} className="group">
             <div className="overflow-hidden rounded-xl border border-border/50 bg-muted/20">
-              {pet.coverImage?.asset?.url && (
+              {pet.coverImage?.url && (
                 <Image
-                  src={pet.coverImage.asset.url}
+                  src={pet.coverImage.url}
                   alt={pet.coverImage.alt || pet.name}
                   width={800}
                   height={600}
