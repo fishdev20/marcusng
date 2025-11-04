@@ -76,19 +76,17 @@ export async function getAllPets(): Promise<Pet[]> {
     groq`*[_type == "pet"] | order(_createdAt asc) {
       _id,
       name,
-      "slug": slug { current },
+      "slug": slug.current,
+      shortDescription,
       logo {
-        "asset": asset->{
-          "url": url
-        }
+        "url": asset->url,
+        alt
       },
       projectUrl,
       repository,
       coverImage {
-        alt,
-        "asset": asset->{
-          "url": url
-        }
+        "url": asset->url,
+        alt
       },
       category,
       techStack[] {
@@ -106,6 +104,7 @@ export async function getPetBySlug(slug: string): Promise<Pet | null> {
       _id,
       name,
       "slug": slug.current,
+      shortDescription,
       "logo": {
         "url": logo.asset->url,
         "alt": logo.alt

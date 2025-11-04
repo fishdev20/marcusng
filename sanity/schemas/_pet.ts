@@ -28,6 +28,14 @@ const pet = {
       type: "image",
     },
     {
+      name: "shortDescription",
+      title: "Short Description",
+      type: "text",
+      rows: 3,
+      description: "A concise summary shown in project listings or previews.",
+      validation: (Rule) => Rule.max(250),
+    },
+    {
       name: "projectUrl",
       title: "Project URL",
       type: "url",

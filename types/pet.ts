@@ -6,7 +6,8 @@ export interface Tech {
 export interface Pet {
   _id: string;
   name: string;
-  slug: string; // now simplified from slug.current
+  slug: string;
+  shortDescription?: string;
   logo?: {
     url?: string;
     alt?: string;
