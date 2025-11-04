@@ -5,11 +5,12 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 
 interface ProjectPageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
-export default async function ProjectDetails({ params }: ProjectPageProps) {
-  const pet = await getPetBySlug(params.slug);
+export default async function ProjectDetails(props: ProjectPageProps) {
+  const { slug } = await props.params;
+  const pet = await getPetBySlug(slug);
   if (!pet) return notFound();
   console.log(pet);
   return (
