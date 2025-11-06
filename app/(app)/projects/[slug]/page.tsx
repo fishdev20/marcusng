@@ -29,12 +29,6 @@ export default async function ProjectDetails(props: { params: Params }) {
 
         <h1 className="text-4xl font-bold mb-4 text-center">{pet.name}</h1>
 
-        {pet.category && (
-          <p className="text-sm text-muted-foreground mb-4 capitalize text-center">
-            {pet.category}
-          </p>
-        )}
-
         <div className="flex flex-wrap justify-center gap-2 mb-8">
           {pet.techStack?.map((tech) => (
             <span

@@ -1,3 +1,4 @@
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import SectionWrapper from "@/components/ui/section-wrapper";
 import { getAllPets } from "@/sanity/lib/query";
@@ -8,7 +9,7 @@ export default async function ProjectsPage() {
   const projects = await getAllPets();
   console.log(projects);
   return (
-    <SectionWrapper>
+    <SectionWrapper className="max-w-7xl">
       <div className="">
         <h1 className="text-4xl md:text-5xl font-bold text-center mb-12">Projects</h1>
 
@@ -18,7 +19,7 @@ export default async function ProjectsPage() {
               key={project._id}
               className={`flex flex-col md:flex-row ${
                 index % 2 === 1 ? "md:flex-row-reverse" : ""
-              } bg-muted/10 dark:bg-muted/20 border border-border/50 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 group`}
+              } bg-muted border border-border/50 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 group`}
             >
               {project.coverImage?.url && (
                 <div className="relative w-full aspect-[4/3]">
@@ -35,9 +36,9 @@ export default async function ProjectsPage() {
               <div className="flex flex-col justify-between p-6 w-full">
                 <div>
                   {project.category && (
-                    <span className="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-1 rounded mb-2">
+                    <Badge variant={"secondary"} className="px-2 py-1 mb-2">
                       {project.category}
-                    </span>
+                    </Badge>
                   )}
                   <h2 className="text-xl font-semibold mb-2">{project.name}</h2>
                   <p className="text-muted-foreground text-sm mt-2 line-clamp-3">
@@ -47,7 +48,7 @@ export default async function ProjectsPage() {
 
                 {/* Links */}
                 <div className="mt-6 flex items-center gap-4">
-                  <Button variant={"secondary"}>
+                  <Button>
                     <Link href={`/projects/${project.slug}`}>View Details</Link>
                   </Button>
 

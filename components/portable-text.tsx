@@ -34,10 +34,10 @@ const components: PortableTextComponents = {
 
       return (
         <div className="overflow-x-auto my-6">
-          <table className="min-w-full border-collapse border border-border text-sm">
+          <table className="min-w-full border-collapse border border-border text-sm bg-accent">
             <thead>
               {hasHeader && (
-                <tr className="bg-muted/40 border-b border-border">
+                <tr className="bg-muted/50 border-b border-border">
                   {rows[0].cells.map((cell: string, i: number) => (
                     <th
                       key={i}

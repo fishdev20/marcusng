@@ -43,7 +43,19 @@ export async function getProfile(): Promise<Profile> {
       email,
       "resumeURL": resumeURL.asset->url,
       socialLinks,
-      skills
+      skills,
+      education[]{
+        school,
+        "logo": {
+          "url": logo.asset->url,
+          alt
+        },
+        degree,
+        major,
+        years,
+        location,
+        details
+      }
     }`,
   );
 }

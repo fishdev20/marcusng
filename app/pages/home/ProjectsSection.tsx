@@ -11,10 +11,10 @@ export default async function ProjectsSection() {
   return (
     <section className="min-h-screen flex items-center justify-center">
       <div className="max-w-5xl w-full py-10 px-6">
-        <h2 className="text-4xl md:text-[2.75rem] md:leading-[1.2] font-semibold tracking-[-0.03em] sm:max-w-xl sm:mx-auto sm:text-center font-incognito">
+        <h2 className="text-3xl md:text-5xl md:leading-[1.2] font-semibold tracking-[-0.03em] sm:max-w-xl font-incognito">
           Featured Projects
         </h2>
-        <p className="mt-2 text-muted-foreground text-lg sm:text-xl sm:text-center">
+        <p className="mt-2 text-muted-foreground text-md md:text-xl">
           Explore some of my recent work — crafted with precision and creativity.
         </p>
 
@@ -60,7 +60,7 @@ export default async function ProjectsSection() {
                 {project.techStack && project.techStack.length > 0 && (
                   <div className="flex flex-wrap gap-2 mt-4">
                     {project.techStack.map((tech) => (
-                      <Badge key={tech.name} className="rounded-md text-foreground bg-muted">
+                      <Badge key={tech.name} variant={"secondary"}>
                         {tech.name}
                       </Badge>
                     ))}
@@ -72,7 +72,7 @@ export default async function ProjectsSection() {
                   {project.links?.liveDemo && (
                     <Button asChild size="lg" className="rounded-full gap-3">
                       <Link href={project.links.liveDemo} target="_blank" rel="noopener noreferrer">
-                        Live Demo <ArrowRight />
+                        Live Demo ↗
                       </Link>
                     </Button>
                   )}

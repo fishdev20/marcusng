@@ -21,4 +21,13 @@ export interface Profile {
     twitch?: string;
   };
   skills?: string[];
+  education?: {
+    school: string;
+    logo?: { url?: string; alt?: string };
+    degree?: string;
+    major?: string;
+    years?: string;
+    location?: string;
+    details?: string;
+  }[];
 }

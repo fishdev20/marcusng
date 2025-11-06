@@ -119,6 +119,75 @@ const profile = {
       description: "Add a list of skills",
       of: [{ type: "string" }],
     },
+    {
+      name: "education",
+      title: "Education",
+      type: "array",
+      description: "Add your academic background or professional training",
+      of: [
+        {
+          type: "object",
+          title: "Education Entry",
+          fields: [
+            {
+              name: "school",
+              title: "School / University",
+              type: "string",
+              validation: (rule) => rule.required(),
+            },
+            {
+              name: "degree",
+              title: "Degree / Certification",
+              type: "string",
+              description: "e.g. Bachelor of Technology, Master of Science, etc.",
+            },
+            {
+              name: "major",
+              title: "Major / Field of Study",
+              type: "string",
+            },
+            defineField({
+              name: "logo",
+              title: "School Logo",
+              type: "image",
+              options: { hotspot: true },
+              fields: [
+                {
+                  name: "alt",
+                  title: "Alt Text",
+                  type: "string",
+                },
+              ],
+            }),
+            {
+              name: "location",
+              title: "Location",
+              type: "string",
+              description: "City, Country (optional)",
+            },
+            {
+              name: "years",
+              title: "Years Attended",
+              type: "string",
+              description: "e.g. 2019 – 2023",
+            },
+            {
+              name: "description",
+              title: "Description",
+              type: "text",
+              rows: 3,
+              description: "Highlight achievements, honors, or notable projects",
+            },
+          ],
+          preview: {
+            select: {
+              title: "school",
+              subtitle: "degree",
+            },
+          },
+        },
+      ],
+    },
   ],
 };
 

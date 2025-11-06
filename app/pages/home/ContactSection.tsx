@@ -39,7 +39,7 @@ export default function ContactSection() {
   };
 
   return (
-    <div className="h-full flex items-center justify-center py-16">
+    <div className="h-full flex items-center justify-center py-16" id="contact">
       <div className="w-full max-w-5xl mx-auto px-6 xl:px-0">
         <h1 className="mt-3 text-3xl md:text-4xl font-semibold tracking-tight">Let&apos;s Talk</h1>
         <p className="mt-3 text-base sm:text-lg text-muted-foreground">
@@ -82,7 +82,7 @@ export default function ContactSection() {
           </div>
 
           {/* Contact form */}
-          <Card className="bg-none shadow-none py-0">
+          <Card className="shadow-none py-0">
             <CardContent className="p-6 md:p-8">
               <form onSubmit={handleSubmit}>
                 <div className="grid md:grid-cols-2 gap-x-8 gap-y-6">
