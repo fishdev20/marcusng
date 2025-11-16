@@ -14,46 +14,48 @@ export default async function ProjectsPage() {
         <h1 className="text-4xl md:text-5xl font-bold text-center mb-12">Projects</h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {projects.map((project, index) => (
+          {projects.map((project) => (
             <div
               key={project._id}
-              className={`flex flex-col md:flex-row ${
-                index % 2 === 1 ? "md:flex-row-reverse" : ""
-              } bg-muted border border-border/50 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 group`}
+              className="group bg-muted border border-border/50 rounded-xl overflow-hidden shadow-sm
+                       hover:shadow-lg transition-all duration-300 flex flex-col md:flex-row"
             >
+              {/* Image */}
               {project.coverImage?.url && (
-                <div className="relative w-full aspect-[4/3]">
+                <div className="relative w-full md:w-1/2 h-48 md:h-auto">
                   <Image
                     src={project.coverImage.url}
                     alt={project.coverImage.alt || project.name}
                     fill
-                    className="object-cover"
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
               )}
 
               {/* Content */}
-              <div className="flex flex-col justify-between p-6 w-full">
+              <div className="flex flex-col justify-between p-6 w-full md:w-1/2">
                 <div>
                   {project.category && (
-                    <Badge variant={"secondary"} className="px-2 py-1 mb-2">
+                    <Badge variant="secondary" className="px-2 py-1 mb-2">
                       {project.category}
                     </Badge>
                   )}
+
                   <h2 className="text-xl font-semibold mb-2">{project.name}</h2>
-                  <p className="text-muted-foreground text-sm mt-2 line-clamp-3">
+
+                  <p className="text-muted-foreground text-sm line-clamp-3">
                     {project.shortDescription || "No description provided."}
                   </p>
                 </div>
 
-                {/* Links */}
+                {/* Buttons */}
                 <div className="mt-6 flex items-center gap-4">
-                  <Button>
+                  <Button asChild>
                     <Link href={`/projects/${project.slug}`}>View Details</Link>
                   </Button>
 
                   {project.projectUrl && (
-                    <Button variant={"ghost"}>
+                    <Button variant="ghost" asChild>
                       <Link
                         href={project.projectUrl}
                         target="_blank"
