@@ -7,7 +7,6 @@ import Link from "next/link";
 
 export default async function ProjectsPage() {
   const projects = await getAllPets();
-  console.log(projects);
   return (
     <SectionWrapper className="max-w-7xl">
       <div className="">
