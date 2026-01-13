@@ -8,7 +8,9 @@ type Params = Promise<{ slug: string }>;
 
 export default async function ProjectDetails(props: { params: Params }) {
   const params = await props.params;
+
   const pet = await getPetBySlug(params.slug);
+
   if (!pet) return notFound();
 
   return (
@@ -57,6 +59,7 @@ export default async function ProjectDetails(props: { params: Params }) {
               Live Demo
             </a>
           )}
+
           {pet.repository && (
             <a
               href={pet.repository}

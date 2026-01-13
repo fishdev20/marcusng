@@ -85,7 +85,7 @@ export async function getProjects(): Promise<Project[]> {
 
 export async function getAllPets(): Promise<Pet[]> {
   return client.fetch(
-    groq`*[_type == "pet"] | order(_createdAt asc) {
+    groq`*[_type == "pet"] | order(_createdAt desc) {
       _id,
       name,
       "slug": slug.current,
