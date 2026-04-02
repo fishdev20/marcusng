@@ -20,7 +20,7 @@ export default function Navbar() {
     },
     {
       title: "Blog",
-      href: "https://marcusng-blog.vercel.app/",
+      href: "/blog",
     },
     {
       title: "Photos",

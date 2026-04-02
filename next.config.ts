@@ -3,12 +3,27 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   images: {
-    domains: [
-      "api.microlink.io", // Microlink Image Preview
-      "avatars.githubusercontent.com",
-      "media.licdn.com",
-      "cdn.jsdelivr.net",
-      "cdn.sanity.io",
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "api.microlink.io",
+      },
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+      },
+      {
+        protocol: "https",
+        hostname: "media.licdn.com",
+      },
+      {
+        protocol: "https",
+        hostname: "cdn.jsdelivr.net",
+      },
+      {
+        protocol: "https",
+        hostname: "cdn.sanity.io",
+      },
     ],
   },
 };
