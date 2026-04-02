@@ -26,7 +26,7 @@ export default function Reveal({
   margin = "0px 0px -12% 0px",
 }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once, amount, margin });
+  const isInView = useInView(ref, { once, amount, margin: margin as never });
   const prefersReducedMotion = useReducedMotion();
 
   const axis =

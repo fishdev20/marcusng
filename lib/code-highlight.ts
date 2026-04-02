@@ -31,6 +31,15 @@ const languageAliases: Record<string, string> = {
   zsh: "bash",
 };
 
+type HighlightedCodeResult = {
+  language: string;
+  highlighted: string;
+};
+
+function escapeHtml(code: string) {
+  return code.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
 export function normalizeCodeLanguage(language?: string) {
   if (!language) return "text";
 
@@ -38,14 +47,14 @@ export function normalizeCodeLanguage(language?: string) {
   return languageAliases[lower] || lower;
 }
 
-export function highlightCode(code: string, language?: string) {
+export function highlightCode(code: string, language?: string): HighlightedCodeResult {
   const normalizedLanguage = normalizeCodeLanguage(language);
   const grammar = Prism.languages[normalizedLanguage];
 
   if (!grammar) {
     return {
       language: normalizedLanguage,
-      highlighted: Prism.util.encode(code),
+      highlighted: escapeHtml(code),
     };
   }
 
