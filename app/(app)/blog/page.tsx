@@ -18,7 +18,10 @@ export default async function BlogPage() {
   const [leadPost, ...otherPosts] = posts;
 
   return (
-    <SectionWrapper className="gap-10 pt-24 md:gap-12">
+    <SectionWrapper
+      reveal={false}
+      className="mb-24 mt-20 gap-10 pt-10 sm:pt-12 md:my-32 md:gap-12 md:pt-24"
+    >
       <div className="gap-6 xl:grid-cols-[minmax(0,0.76fr)_minmax(0,1.24fr)] xl:items-end">
         <div className="space-y-4">
           <p className="text-[0.72rem] uppercase tracking-[0.32em] text-primary">Writing</p>

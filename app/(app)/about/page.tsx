@@ -48,7 +48,7 @@ export default async function AboutPage() {
   ].filter((item): item is SocialItem => Boolean(item));
 
   return (
-    <SectionWrapper className="gap-10 md:gap-12">
+    <SectionWrapper reveal={false} className="mb-24 mt-20 gap-10 md:my-32 md:gap-12">
       <div className="grid gap-6 xl:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)] xl:items-end">
         <div className="space-y-4">
           <p className="text-[0.72rem] uppercase tracking-[0.32em] text-primary">About</p>

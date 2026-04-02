@@ -39,18 +39,10 @@ export async function HeroSection() {
   const intro = profile.headline || "Software engineer shaping polished products for the web.";
   const bio =
     profile.shortBio ||
-    "I build production-ready products with an emphasis on clear engineering, strong frontend execution, and thoughtful product decisions.";
+    "I build production-ready software with an emphasis on clear architecture, reliable systems, and thoughtful product decisions.";
 
   return (
     <section className="relative isolate w-full overflow-hidden">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 top-0 h-screen w-screen -translate-x-1/2 opacity-100 motion-safe:animate-ambient-drift"
-        style={{
-          background:
-            "radial-gradient(circle at 10% 16%, color-mix(in oklch, var(--primary) 24%, transparent), transparent 32%), radial-gradient(circle at 82% 18%, color-mix(in oklch, var(--secondary) 22%, transparent), transparent 30%), radial-gradient(circle at 48% 56%, color-mix(in oklch, var(--primary) 10%, transparent), transparent 42%), linear-gradient(180deg, color-mix(in oklch, var(--background) 38%, transparent), color-mix(in oklch, var(--background) 96%, transparent))",
-        }}
-      />
       <div className="relative mx-auto flex min-h-[100svh] w-full max-w-6xl flex-col justify-center gap-8 px-6 pb-10 pt-24 md:px-12 md:pb-14 md:pt-28 xl:px-16">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1.04fr)_minmax(18rem,0.76fr)] lg:items-start xl:grid-cols-[minmax(0,1.08fr)_minmax(18rem,0.72fr)] xl:items-center">
           <Reveal direction="up" distance={30} className="space-y-7 md:space-y-8">

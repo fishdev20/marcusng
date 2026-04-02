@@ -8,10 +8,12 @@ export default function SectionWrapper({
   title,
   className,
   children,
+  reveal = true,
 }: {
   title?: string;
   className?: string;
   children: ReactNode;
+  reveal?: boolean;
 }) {
   return (
     <section className={cn("max-w-7xl mx-auto px-6 md:px-16 flex flex-col gap-4 my-32", className)}>
@@ -20,7 +22,7 @@ export default function SectionWrapper({
           <h1 className="font-incognito text-3xl font-semibold md:text-4xl max-w-4xl">{title}</h1>
         </FadeUp>
       )}
-      <Reveal delay={0.05}>{children}</Reveal>
+      {reveal ? <Reveal delay={0.05}>{children}</Reveal> : children}
     </section>
   );
 }

@@ -11,6 +11,8 @@ type RevealProps = {
   distance?: number;
   direction?: "up" | "down" | "left" | "right";
   once?: boolean;
+  amount?: number;
+  margin?: string;
 };
 
 export default function Reveal({
@@ -20,9 +22,11 @@ export default function Reveal({
   distance = 22,
   direction = "up",
   once = true,
+  amount = 0.08,
+  margin = "0px 0px -12% 0px",
 }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once, amount: 0.2 });
+  const isInView = useInView(ref, { once, amount, margin });
   const prefersReducedMotion = useReducedMotion();
 
   const axis =

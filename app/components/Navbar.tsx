@@ -13,7 +13,6 @@ const navItems = [
   { title: "About", href: "/about" },
   { title: "Projects", href: "/projects" },
   { title: "Blog", href: "/blog" },
-  { title: "Photos", href: "/photos" },
 ];
 
 export default function Navbar() {

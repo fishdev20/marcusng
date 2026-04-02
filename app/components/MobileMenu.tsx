@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { SheetClose } from "@/components/ui/sheet";
-import { Camera, CircleUserRound, FolderKanban, Newspaper, X } from "lucide-react";
+import { CircleUserRound, FolderKanban, Newspaper, X } from "lucide-react";
 import Link from "next/link";
 import Logo from "./Logo";
 
@@ -19,11 +19,6 @@ const navItems = [
     title: "Blog",
     href: "/blog",
     icon: Newspaper,
-  },
-  {
-    title: "Photos",
-    href: "/photos",
-    icon: Camera,
   },
 ];
 
