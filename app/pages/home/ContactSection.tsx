@@ -1,5 +1,6 @@
 "use client";
 
+import Reveal from "@/app/components/animation/Reveal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -79,7 +80,10 @@ export default function ContactSection() {
   return (
     <section className="mx-auto w-full max-w-6xl px-6 pb-24 pt-10 md:px-16" id="contact">
       <div className="space-y-8">
-        <div className="grid gap-6 xl:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] xl:items-end">
+        <Reveal
+          direction="up"
+          className="grid gap-6 xl:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] xl:items-end"
+        >
           <div className="space-y-4">
             <p className="text-[0.72rem] uppercase tracking-[0.32em] text-primary">Contact</p>
             <h2 className="max-w-xl font-incognito text-[clamp(2.6rem,5.2vw,4.8rem)] leading-[0.95] tracking-[-0.04em]">
@@ -105,10 +109,10 @@ export default function ContactSection() {
               )}
             </div>
           </div>
-        </div>
+        </Reveal>
 
         <div className="grid items-start gap-6 xl:grid-cols-[minmax(0,0.76fr)_minmax(0,1.24fr)]">
-          <div className="flex flex-col gap-4 self-start">
+          <Reveal direction="up" delay={0.06} className="flex flex-col gap-4 self-start">
             {contactChannels.map((channel, index) => {
               const Icon = channel.icon;
 
@@ -148,9 +152,14 @@ export default function ContactSection() {
                 </Link>
               );
             })}
-          </div>
+          </Reveal>
 
-          <div className="relative self-start overflow-hidden rounded-[2.25rem] border border-border/70">
+          <Reveal
+            direction="left"
+            distance={28}
+            delay={0.12}
+            className="relative self-start overflow-hidden rounded-[2.25rem] border border-border/70"
+          >
             <div
               aria-hidden="true"
               className="absolute inset-0"
@@ -182,7 +191,7 @@ export default function ContactSection() {
                         id="firstName"
                         placeholder="Marcus"
                         required
-                        className="h-12 rounded-2xl border-border/70 bg-background/70 px-4"
+                        className="h-12 rounded-2xl border-border/70 bg-background/70 px-4 transition-all duration-300 focus:-translate-y-0.5 focus:border-primary/45 focus:bg-background"
                       />
                     </div>
                     <div className="space-y-2">
@@ -191,7 +200,7 @@ export default function ContactSection() {
                         name="lastName"
                         id="lastName"
                         placeholder="Nguyen"
-                        className="h-12 rounded-2xl border-border/70 bg-background/70 px-4"
+                        className="h-12 rounded-2xl border-border/70 bg-background/70 px-4 transition-all duration-300 focus:-translate-y-0.5 focus:border-primary/45 focus:bg-background"
                       />
                     </div>
                   </div>
@@ -204,7 +213,7 @@ export default function ContactSection() {
                       type="email"
                       placeholder="name@company.com"
                       required
-                      className="h-12 rounded-2xl border-border/70 bg-background/70 px-4"
+                      className="h-12 rounded-2xl border-border/70 bg-background/70 px-4 transition-all duration-300 focus:-translate-y-0.5 focus:border-primary/45 focus:bg-background"
                     />
                   </div>
 
@@ -216,13 +225,13 @@ export default function ContactSection() {
                       placeholder="A few lines about the project, role, or conversation you want to have."
                       rows={7}
                       required
-                      className="min-h-40 rounded-[1.6rem] border-border/70 bg-background/70 px-4 py-3"
+                      className="min-h-40 rounded-[1.6rem] border-border/70 bg-background/70 px-4 py-3 transition-all duration-300 focus:-translate-y-0.5 focus:border-primary/45 focus:bg-background"
                     />
                   </div>
 
                   <div className="flex flex-col gap-3 pt-2">
                     <Button
-                      className="h-12 rounded-full px-6 text-sm uppercase tracking-[0.18em]"
+                      className="h-12 rounded-full px-6 text-sm uppercase tracking-[0.18em] transition-transform duration-300 hover:-translate-y-0.5"
                       size="lg"
                       disabled={loading}
                     >
@@ -250,7 +259,7 @@ export default function ContactSection() {
                 </form>
               </div>
             </div>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

@@ -1,4 +1,5 @@
 import CharacterFadeUpText from "@/app/components/animation/CharacterFadupText";
+import Reveal from "@/app/components/animation/Reveal";
 import { PixelImage } from "@/components/ui/pixel-image";
 import { getProfile } from "@/sanity/lib/query";
 import { ArrowRight, Building2, Github, Linkedin, MapPin, Twitter } from "lucide-react";
@@ -44,7 +45,7 @@ export async function HeroSection() {
     <section className="relative isolate w-full overflow-hidden">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 top-0 h-screen w-screen -translate-x-1/2 opacity-100"
+        className="pointer-events-none absolute left-1/2 top-0 h-screen w-screen -translate-x-1/2 opacity-100 motion-safe:animate-ambient-drift"
         style={{
           background:
             "radial-gradient(circle at 10% 16%, color-mix(in oklch, var(--primary) 24%, transparent), transparent 32%), radial-gradient(circle at 82% 18%, color-mix(in oklch, var(--secondary) 22%, transparent), transparent 30%), radial-gradient(circle at 48% 56%, color-mix(in oklch, var(--primary) 10%, transparent), transparent 42%), linear-gradient(180deg, color-mix(in oklch, var(--background) 38%, transparent), color-mix(in oklch, var(--background) 96%, transparent))",
@@ -52,7 +53,7 @@ export async function HeroSection() {
       />
       <div className="relative mx-auto flex min-h-[100svh] w-full max-w-6xl flex-col justify-center gap-8 px-6 pb-10 pt-24 md:px-12 md:pb-14 md:pt-28 xl:px-16">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1.04fr)_minmax(18rem,0.76fr)] lg:items-start xl:grid-cols-[minmax(0,1.08fr)_minmax(18rem,0.72fr)] xl:items-center">
-          <div className="space-y-7 md:space-y-8">
+          <Reveal direction="up" distance={30} className="space-y-7 md:space-y-8">
             <div className="space-y-5">
               <h1 className="max-w-5xl font-incognito text-[clamp(3rem,8vw,7.35rem)] leading-[0.88] tracking-[-0.065em] text-balance">
                 Building for the web.
@@ -63,7 +64,7 @@ export async function HeroSection() {
             </div>
 
             <div className="grid gap-7 xl:grid-cols-[minmax(0,1fr)_minmax(15rem,0.5fr)] xl:items-start">
-              <div className="space-y-6">
+              <Reveal delay={0.08} direction="up" className="space-y-6">
                 <p className="max-w-xl text-sm leading-7 text-muted-foreground md:text-base">
                   {bio}
                 </p>
@@ -81,15 +82,19 @@ export async function HeroSection() {
 
                   <Link
                     href="/projects"
-                    className="inline-flex items-center gap-2 rounded-full border border-border/80 px-5 py-3 text-sm font-medium text-foreground transition-colors duration-300 hover:border-primary/40 hover:text-primary"
+                    className="inline-flex items-center gap-2 rounded-full border border-border/80 px-5 py-3 text-sm font-medium text-foreground transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/40 hover:text-primary"
                   >
                     See selected work
                     <ArrowRight className="h-4 w-4" />
                   </Link>
                 </div>
-              </div>
+              </Reveal>
 
-              <div className="space-y-5 border-t border-border/70 pt-5 xl:border-l xl:border-t-0 xl:pl-6 xl:pt-0">
+              <Reveal
+                delay={0.14}
+                direction="up"
+                className="space-y-5 border-t border-border/70 pt-5 xl:border-l xl:border-t-0 xl:pl-6 xl:pt-0"
+              >
                 {profile.location ? (
                   <div className="space-y-2">
                     <p className="text-[0.68rem] uppercase tracking-[0.26em] text-muted-foreground">
@@ -131,7 +136,7 @@ export async function HeroSection() {
                           href={href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 rounded-full border border-border/70 px-3 py-2 text-sm text-muted-foreground transition-colors hover:border-primary/35 hover:text-foreground"
+                          className="inline-flex items-center gap-2 rounded-full border border-border/70 px-3 py-2 text-sm text-muted-foreground transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/35 hover:text-foreground"
                           aria-label={label}
                         >
                           <Icon className="h-4 w-4" />
@@ -141,12 +146,17 @@ export async function HeroSection() {
                     </div>
                   </div>
                 ) : null}
-              </div>
+              </Reveal>
             </div>
-          </div>
+          </Reveal>
 
-          <div className="w-full max-w-[25rem] space-y-4 md:max-w-[28rem] lg:ml-auto lg:max-w-[22rem] xl:max-w-[26rem]">
-            <div className="overflow-hidden rounded-[2rem] border border-border/70 bg-muted/35 p-3">
+          <Reveal
+            delay={0.18}
+            direction="left"
+            distance={34}
+            className="w-full max-w-[25rem] space-y-4 md:max-w-[28rem] lg:ml-auto lg:max-w-[22rem] xl:max-w-[26rem]"
+          >
+            <div className="overflow-hidden rounded-[2rem] border border-border/70 bg-muted/35 p-3 motion-safe:animate-soft-float">
               {profile.profileImage?.url ? (
                 <PixelImage
                   src={profile.profileImage.url}
@@ -177,7 +187,7 @@ export async function HeroSection() {
                     href={item.href}
                     target={item.href.startsWith("http") ? "_blank" : undefined}
                     rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                    className="inline-flex items-center justify-between gap-3 border-b border-border/55 pb-2 text-right transition-colors hover:text-foreground"
+                    className="inline-flex items-center justify-between gap-3 border-b border-border/55 pb-2 text-right transition-all duration-300 hover:translate-x-0.5 hover:text-foreground"
                   >
                     <span>{item.label}</span>
                     <ArrowRight className="h-3.5 w-3.5" />
@@ -185,7 +195,7 @@ export async function HeroSection() {
                 ))}
               </div>
             </div>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

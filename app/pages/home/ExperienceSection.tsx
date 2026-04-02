@@ -44,7 +44,12 @@ export default async function ExperienceSection() {
             {["frontend systems", "product delivery", "cross-functional work"].map((item) => (
               <span
                 key={item}
-                className="rounded-full border border-border/70 px-4 py-2 text-xs uppercase tracking-[0.22em] text-muted-foreground"
+                className="rounded-full border px-4 py-2 text-xs font-medium uppercase tracking-[0.22em] text-foreground/88"
+                style={{
+                  borderColor: "color-mix(in oklch, var(--border) 60%, var(--primary) 40%)",
+                  background:
+                    "linear-gradient(135deg, color-mix(in oklch, var(--background) 86%, var(--primary) 14%), color-mix(in oklch, var(--background) 95%, var(--primary) 5%))",
+                }}
               >
                 {item}
               </span>
@@ -136,7 +141,7 @@ export default async function ExperienceSection() {
                               {experience.company}
                             </h3>
                             {experience.isCurrent ? (
-                              <span className="rounded-full bg-primary px-3 py-1 text-[0.68rem] font-medium uppercase tracking-[0.22em] text-primary-foreground">
+                              <span className="rounded-full bg-primary px-3 py-1 text-[0.68rem] font-medium uppercase tracking-[0.22em] text-primary-foreground shadow-[0_10px_24px_color-mix(in_oklch,var(--primary)_24%,transparent)]">
                                 Current
                               </span>
                             ) : null}
@@ -199,7 +204,11 @@ export default async function ExperienceSection() {
                           <Badge
                             key={`${experience._id}-${tech}`}
                             variant="secondary"
-                            className="rounded-full border border-border/70 bg-background/65 px-3 py-1 text-[0.72rem] uppercase tracking-[0.16em] text-muted-foreground"
+                            className="rounded-full border px-3 py-1 text-[0.72rem] font-medium uppercase tracking-[0.16em] text-foreground/88"
+                            style={{
+                              borderColor: `color-mix(in oklch, var(--border) 56%, ${tint} 44%)`,
+                              background: `linear-gradient(135deg, color-mix(in oklch, var(--background) 84%, ${tint} 16%), color-mix(in oklch, var(--background) 94%, ${tint} 6%))`,
+                            }}
                           >
                             {tech}
                           </Badge>

@@ -1,5 +1,6 @@
 "use client";
 import { FadeUp } from "@/app/components/animation/FadeUp";
+import Reveal from "@/app/components/animation/Reveal";
 import { cn } from "@/lib/utils";
 import { ReactNode } from "react";
 
@@ -19,7 +20,7 @@ export default function SectionWrapper({
           <h1 className="font-incognito text-3xl font-semibold md:text-4xl max-w-4xl">{title}</h1>
         </FadeUp>
       )}
-      {children}
+      <Reveal delay={0.05}>{children}</Reveal>
     </section>
   );
 }

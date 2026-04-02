@@ -125,7 +125,7 @@ function ProjectImage({
       )}
 
       {label ? (
-        <div className="absolute left-4 top-4 z-[2] rounded-full bg-background/88 px-3 py-1 text-[0.68rem] uppercase tracking-[0.22em] text-foreground backdrop-blur-sm">
+        <div className="absolute left-4 top-4 z-[2] rounded-full border border-primary/30 bg-primary px-3 py-1 text-[0.68rem] font-medium uppercase tracking-[0.22em] text-primary-foreground shadow-[0_12px_28px_color-mix(in_oklch,var(--primary)_26%,transparent)]">
           {label}
         </div>
       ) : null}
@@ -194,7 +194,13 @@ export default async function ProjectsSection() {
                       {leadProject.techStack.slice(0, 6).map((tech) => (
                         <span
                           key={`${leadProject._id}-${tech.name}`}
-                          className="text-[0.72rem] uppercase tracking-[0.18em] text-muted-foreground"
+                          className="rounded-full border border-border/70 px-3 py-1 text-[0.72rem] font-medium uppercase tracking-[0.18em] text-foreground/88"
+                          style={{
+                            borderColor:
+                              "color-mix(in oklch, var(--border) 58%, var(--primary) 42%)",
+                            background:
+                              "linear-gradient(135deg, color-mix(in oklch, var(--background) 84%, var(--primary) 16%), color-mix(in oklch, var(--background) 94%, var(--primary) 6%))",
+                          }}
                         >
                           {tech.name}
                         </span>
@@ -253,7 +259,13 @@ export default async function ProjectsSection() {
                         {project.techStack.slice(0, 6).map((tech) => (
                           <span
                             key={`${project._id}-${tech.name}`}
-                            className="text-[0.72rem] uppercase tracking-[0.18em] text-muted-foreground"
+                            className="rounded-full border border-border/70 px-3 py-1 text-[0.72rem] font-medium uppercase tracking-[0.18em] text-foreground/88"
+                            style={{
+                              borderColor:
+                                "color-mix(in oklch, var(--border) 60%, var(--secondary) 40%)",
+                              background:
+                                "linear-gradient(135deg, color-mix(in oklch, var(--background) 86%, var(--secondary) 14%), color-mix(in oklch, var(--background) 95%, var(--secondary) 5%))",
+                            }}
                           >
                             {tech.name}
                           </span>
