@@ -1,12 +1,12 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import { PortableText as BasePortableText, PortableTextComponents } from "@portabletext/react";
 import Image from "next/image";
 
 const components: PortableTextComponents = {
   types: {
     image: ({ value }) => {
-      console.log(value);
       return (
         <>
           {value?.url ? (
@@ -89,9 +89,9 @@ const components: PortableTextComponents = {
 
 // ✅ Named export
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function PortableBlock({ value }: { value: any }) {
+export function PortableBlock({ value, className }: { value: any; className?: string }) {
   return (
-    <div className="prose dark:prose-invert max-w-none">
+    <div className={cn("prose dark:prose-invert max-w-none", className)}>
       <BasePortableText value={value} components={components} />
     </div>
   );
