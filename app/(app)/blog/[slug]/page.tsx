@@ -1,10 +1,12 @@
-import { PortableText, type PortableTextComponents } from "@portabletext/react";
-import { Button } from "@/components/ui/button";
+import ReadingProgress from "@/app/components/blog/ReadingProgress";
+import CodeBlock from "@/app/components/blog/CodeBlock";
 import { getBlogBySlug, getBlogSlugs } from "@/lib/blog";
+import { highlightCode } from "@/lib/code-highlight";
 import { formatDate, slugify } from "@/lib/utils";
-import { blogDataset, blogProjectId } from "@/sanity/blog-env";
 import { urlForBlogImage } from "@/sanity/blog-image";
 import { IBlogArticle, IBlogHeading } from "@/types/blog";
+import { PortableText, type PortableTextComponents } from "@portabletext/react";
+import { ArrowLeft, Link2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -29,7 +31,7 @@ const portableTextComponents: PortableTextComponents = {
     h2: ({ children, value }) => (
       <h2
         id={slugify(getHeadingText(value as IBlogHeading))}
-        className="mt-12 scroll-mt-28 font-incognito text-3xl font-semibold"
+        className="mt-14 scroll-mt-28 font-incognito text-[2rem] leading-[0.98] tracking-[-0.03em] md:text-[2.35rem]"
       >
         {children}
       </h2>
@@ -37,7 +39,7 @@ const portableTextComponents: PortableTextComponents = {
     h3: ({ children, value }) => (
       <h3
         id={slugify(getHeadingText(value as IBlogHeading))}
-        className="mt-10 scroll-mt-28 font-incognito text-2xl font-semibold"
+        className="mt-12 scroll-mt-28 font-incognito text-[1.55rem] leading-[1] tracking-[-0.02em] md:text-[1.85rem]"
       >
         {children}
       </h3>
@@ -45,10 +47,15 @@ const portableTextComponents: PortableTextComponents = {
     h4: ({ children, value }) => (
       <h4
         id={slugify(getHeadingText(value as IBlogHeading))}
-        className="mt-8 scroll-mt-28 font-incognito text-xl font-semibold"
+        className="mt-10 scroll-mt-28 font-incognito text-[1.2rem] leading-[1.05] tracking-[-0.01em] md:text-[1.35rem]"
       >
         {children}
       </h4>
+    ),
+    blockquote: ({ children }) => (
+      <blockquote className="my-8 border-l-2 border-primary/40 pl-5 font-incognito text-[1.2rem] leading-8 text-foreground/88 md:text-[1.35rem]">
+        {children}
+      </blockquote>
     ),
   },
   types: {
@@ -58,7 +65,7 @@ const portableTextComponents: PortableTextComponents = {
       }
 
       return (
-        <div className="my-8 overflow-hidden rounded-2xl border border-border/70">
+        <div className="my-10 overflow-hidden rounded-[1.8rem] border border-border/70">
           <Image
             src={urlForBlogImage(value)}
             alt={value.alt || "Blog image"}
@@ -69,11 +76,12 @@ const portableTextComponents: PortableTextComponents = {
         </div>
       );
     },
-    code: ({ value }) => (
-      <pre className="my-6 overflow-x-auto rounded-2xl border border-border/70 bg-muted/60 p-4 text-sm leading-6">
-        <code>{value.code}</code>
-      </pre>
-    ),
+    code: ({ value }) => {
+      const code = value?.code || "";
+      const { highlighted, language } = highlightCode(code, value?.language);
+
+      return <CodeBlock code={code} language={language} highlighted={highlighted} />;
+    },
     table: ({ value }) => {
       const rows = value?.rows || [];
 
@@ -82,7 +90,7 @@ const portableTextComponents: PortableTextComponents = {
       }
 
       return (
-        <div className="my-8 overflow-x-auto rounded-2xl border border-border/70">
+        <div className="my-10 overflow-x-auto rounded-[1.6rem] border border-border/70">
           <table className="min-w-full border-collapse text-sm">
             <tbody>
               {rows.map((row: { _key?: string; cells?: string[] }, rowIndex: number) => (
@@ -110,7 +118,7 @@ const portableTextComponents: PortableTextComponents = {
           href={href}
           target={isExternal ? "_blank" : undefined}
           rel={isExternal ? "noreferrer noopener" : undefined}
-          className="text-primary underline decoration-primary/40 underline-offset-4 transition-colors hover:decoration-primary"
+          className="text-primary underline decoration-primary/35 underline-offset-4 transition-colors hover:decoration-primary"
         >
           {children}
         </a>
@@ -137,65 +145,100 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ sl
   const coverImageUrl = article.mainImage ? urlForBlogImage(article.mainImage) : null;
 
   return (
-    <section className="mx-auto flex max-w-6xl flex-col gap-10 px-6 pb-24 pt-28 md:px-16">
-      <div className="flex flex-col gap-6 border-b border-border/70 pb-10">
-        <Link
-          href="/blog"
-          className="text-sm uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-foreground"
-        >
-          Back to blog
-        </Link>
+    <section className="mx-auto flex max-w-7xl flex-col gap-10 px-6 pb-24 pt-28 md:px-16">
+      <ReadingProgress />
+      <div className="border-b border-border/70 pb-10">
+        <div className="grid gap-8 xl:grid-cols-[minmax(0,0.78fr)_minmax(0,1.22fr)] xl:items-end">
+          <div className="space-y-4">
+            <Link
+              href="/blog"
+              className="inline-flex items-center gap-2 text-[0.72rem] uppercase tracking-[0.22em] text-muted-foreground transition-colors hover:text-foreground"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Back to blog
+            </Link>
 
-        <div className="flex max-w-4xl flex-col gap-5">
-          <h1 className="font-incognito text-4xl font-semibold leading-tight md:text-6xl">
-            {article.title}
-          </h1>
-          <p className="text-base leading-7 text-muted-foreground md:text-lg">
-            {article.smallDesc}
-          </p>
-        </div>
+            <div className="flex flex-wrap gap-2.5">
+              {article.categories?.length ? (
+                article.categories.map((category) => (
+                  <span
+                    key={`${article.slug}-${category.title}`}
+                    className="rounded-full border border-border/70 px-3 py-1 text-[0.72rem] font-medium uppercase tracking-[0.18em] text-foreground/88"
+                    style={{
+                      borderColor: "color-mix(in oklch, var(--border) 58%, var(--primary) 42%)",
+                      background:
+                        "linear-gradient(135deg, color-mix(in oklch, var(--background) 84%, var(--primary) 16%), color-mix(in oklch, var(--background) 94%, var(--primary) 6%))",
+                    }}
+                  >
+                    {category.title}
+                  </span>
+                ))
+              ) : (
+                <span
+                  className="rounded-full border border-border/70 px-3 py-1 text-[0.72rem] font-medium uppercase tracking-[0.18em] text-foreground/88"
+                  style={{
+                    borderColor: "color-mix(in oklch, var(--border) 58%, var(--secondary) 42%)",
+                    background:
+                      "linear-gradient(135deg, color-mix(in oklch, var(--background) 84%, var(--secondary) 16%), color-mix(in oklch, var(--background) 94%, var(--secondary) 6%))",
+                  }}
+                >
+                  Article
+                </span>
+              )}
+            </div>
 
-        <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
-          <span>{formatDate(article.date)}</span>
-          <span className="h-1 w-1 rounded-full bg-primary/70" />
-          <span>{getAuthorName(article.author)}</span>
-          {article.categories?.length ? (
-            <>
-              <span className="h-1 w-1 rounded-full bg-primary/70" />
-              <span>{article.categories.map((category) => category.title).join(", ")}</span>
-            </>
-          ) : null}
+            <h1 className="max-w-4xl font-incognito text-[clamp(2.8rem,6vw,5.8rem)] leading-[0.92] tracking-[-0.055em]">
+              {article.title}
+            </h1>
+          </div>
+
+          <div className="flex flex-col gap-5 xl:items-end">
+            <p className="max-w-2xl text-base leading-7 text-muted-foreground md:text-lg xl:text-right">
+              {article.smallDesc}
+            </p>
+
+            <div className="flex flex-wrap gap-4 text-sm text-muted-foreground xl:justify-end">
+              <span>{formatDate(article.date)}</span>
+              <span>{getAuthorName(article.author)}</span>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_240px]">
+      <div className="grid gap-10 xl:grid-cols-[minmax(0,1fr)_17rem]">
         <article className="min-w-0">
           {coverImageUrl ? (
-            <div className="relative mb-10 aspect-[16/9] overflow-hidden rounded-[2rem] border border-border/70">
-              <Image
-                src={coverImageUrl}
-                alt={article.title}
-                fill
-                priority
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 70vw"
-              />
+            <div className="relative mb-10 overflow-hidden rounded-[2.2rem] border border-border/70">
+              <div className="relative aspect-[16/9]">
+                <Image
+                  src={coverImageUrl}
+                  alt={article.title}
+                  fill
+                  priority
+                  className="object-cover"
+                  sizes="(max-width: 1280px) 100vw, 72vw"
+                />
+              </div>
             </div>
           ) : null}
 
-          <div className="prose prose-neutral max-w-none dark:prose-invert prose-headings:font-incognito prose-a:text-primary prose-pre:bg-transparent">
-            <PortableText
-              value={article.body}
-              components={portableTextComponents}
-              onMissingComponent={false}
-            />
+          <div className="gap-8">
+            <div className="min-w-0">
+              <div className="prose prose-neutral max-w-none dark:prose-invert prose-headings:font-incognito prose-a:text-primary prose-pre:bg-transparent prose-p:text-base prose-p:leading-8 prose-p:text-muted-foreground prose-li:text-base prose-li:leading-8 prose-li:text-muted-foreground prose-strong:text-foreground prose-hr:border-border/60">
+                <PortableText
+                  value={article.body}
+                  components={portableTextComponents}
+                  onMissingComponent={false}
+                />
+              </div>
+            </div>
           </div>
         </article>
 
-        <aside className="space-y-4 lg:sticky lg:top-28 lg:self-start">
-          <div className="rounded-2xl border border-border/70 bg-background/80 p-5 backdrop-blur-sm">
-            <p className="text-sm uppercase tracking-[0.2em] text-muted-foreground">Contents</p>
-            <div className="mt-4 flex flex-col gap-3">
+        <aside className="space-y-5 xl:sticky xl:top-28 xl:self-start">
+          <div className="border-t border-border/65 pt-5">
+            <p className="text-[0.72rem] uppercase tracking-[0.24em] text-primary">Contents</p>
+            <div className="mt-5 flex flex-col gap-3">
               {headings.length ? (
                 headings.map((heading) => {
                   const text = getHeadingText(heading);
@@ -204,9 +247,10 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ sl
                     <a
                       key={heading._key}
                       href={`#${slugify(text)}`}
-                      className="text-sm leading-6 text-muted-foreground transition-colors hover:text-foreground"
+                      className="inline-flex items-start gap-2 text-sm leading-6 text-muted-foreground transition-colors hover:text-foreground"
                     >
-                      {text}
+                      <Link2 className="mt-1 h-3.5 w-3.5 shrink-0 text-primary/70" />
+                      <span>{text}</span>
                     </a>
                   );
                 })
@@ -216,17 +260,6 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ sl
                 </p>
               )}
             </div>
-          </div>
-
-          <div className="rounded-2xl border border-border/70 bg-muted/30 p-5">
-            <p className="text-sm leading-6 text-muted-foreground">
-              Source: Sanity project{" "}
-              <span className="font-mono text-foreground">{blogProjectId}</span> in dataset{" "}
-              <span className="font-mono text-foreground">{blogDataset}</span>.
-            </p>
-            <Button asChild variant="outline" className="mt-4 w-full">
-              <Link href="/blog">Browse more posts</Link>
-            </Button>
           </div>
         </aside>
       </div>
