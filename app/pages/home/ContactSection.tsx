@@ -1,119 +1,258 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { MailIcon, MessageCircle, PhoneIcon } from "lucide-react";
+import { ArrowUpRight, MailIcon, MessageCircle, PhoneIcon } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
+type SubmitStatus = {
+  type: "success" | "error";
+  message: string;
+} | null;
+
+const contactChannels = [
+  {
+    title: "Email",
+    description: "Best for project inquiries, collaboration, or anything that needs context.",
+    value: "minhnguyen.dev20@gmail.com",
+    href: "mailto:minhnguyen.dev20@gmail.com",
+    icon: MailIcon,
+  },
+  {
+    title: "WhatsApp",
+    description: "Useful for quick back-and-forth when a conversation should move faster.",
+    value: "Start a chat",
+    href: "https://wa.me/358449824682",
+    icon: MessageCircle,
+  },
+  {
+    title: "Phone",
+    description: "Available for direct contact when a call makes more sense than email.",
+    value: "+358 44 982 4682",
+    href: "tel:+358449824682",
+    icon: PhoneIcon,
+  },
+];
+
 export default function ContactSection() {
   const [loading, setLoading] = useState(false);
-  const [status, setStatus] = useState<string | null>(null);
+  const [status, setStatus] = useState<SubmitStatus>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     setStatus(null);
 
-    const formData = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+    const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
 
-    const res = await fetch("/api/contact", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
 
-    console.log(res);
+      if (!res.ok) {
+        throw new Error("Failed to send");
+      }
 
-    if (res.ok) {
-      setStatus("✅ Message sent successfully!");
-      //   e.currentTarget.reset();
-    } else {
-      setStatus("❌ Failed to send message. Please try again.");
+      setStatus({
+        type: "success",
+        message: "Message sent. I will get back to you as soon as I can.",
+      });
+      form.reset();
+    } catch {
+      setStatus({
+        type: "error",
+        message: "Something went wrong while sending the message. Please try email instead.",
+      });
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
-    <div className="h-full flex items-center justify-center py-16" id="contact">
-      <div className="w-full max-w-5xl mx-auto px-6 xl:px-0">
-        <h1 className="mt-3 text-3xl md:text-4xl font-semibold tracking-tight">Let&apos;s Talk</h1>
-        <p className="mt-3 text-base sm:text-lg text-muted-foreground">
-          I&apos;d love to hear from you. Please fill out this form or shoot me an email.
-        </p>
-
-        <div className="mt-24 grid lg:grid-cols-2 gap-16 md:gap-10">
-          {/* Left side info */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-12">
-            <div>
-              <div className="h-12 w-12 flex items-center justify-center bg-primary/5 dark:bg-primary/10 text-primary rounded-full">
-                <MailIcon />
-              </div>
-              <h3 className="mt-6 font-semibold text-xl">Email</h3>
-              <p className="my-2.5 text-muted-foreground">Send me through</p>
-              <Link className="font-medium text-primary" href="mailto:minhnguyen.dev20@gmail.com">
-                minhnguyen.dev20@gmail.com
-              </Link>
-            </div>
-            <div>
-              <div className="h-12 w-12 flex items-center justify-center bg-primary/5 dark:bg-primary/10 text-primary rounded-full">
-                <MessageCircle />
-              </div>
-              <h3 className="mt-6 font-semibold text-xl">Whatsapp</h3>
-              <p className="my-2.5 text-muted-foreground">Send me direct message</p>
-              <Link className="font-medium text-primary" href="#">
-                Start new chat
-              </Link>
-            </div>
-            <div>
-              <div className="h-12 w-12 flex items-center justify-center bg-primary/5 dark:bg-primary/10 text-primary rounded-full">
-                <PhoneIcon />
-              </div>
-              <h3 className="mt-6 font-semibold text-xl">Phone</h3>
-              <p className="my-2.5 text-muted-foreground">Anytime.</p>
-              <Link className="font-medium text-primary" href="tel:+358449824682">
-                +358 44 982 4682
-              </Link>
-            </div>
+    <section className="mx-auto w-full max-w-6xl px-6 pb-24 pt-10 md:px-16" id="contact">
+      <div className="space-y-8">
+        <div className="grid gap-6 xl:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] xl:items-end">
+          <div className="space-y-4">
+            <p className="text-[0.72rem] uppercase tracking-[0.32em] text-primary">Contact</p>
+            <h2 className="max-w-xl font-incognito text-[clamp(2.6rem,5.2vw,4.8rem)] leading-[0.95] tracking-[-0.04em]">
+              Open for projects, roles, and direct conversations.
+            </h2>
           </div>
 
-          {/* Contact form */}
-          <Card className="shadow-none py-0">
-            <CardContent className="p-6 md:p-8">
-              <form onSubmit={handleSubmit}>
-                <div className="grid md:grid-cols-2 gap-x-8 gap-y-6">
-                  <div>
-                    <Label htmlFor="firstName">First Name</Label>
-                    <Input name="firstName" id="firstName" placeholder="First name" required />
+          <div className="flex flex-col gap-4 xl:items-end">
+            <p className="max-w-lg text-base leading-7 text-muted-foreground md:text-lg xl:text-right">
+              If there is something worth building or discussing, this is the cleanest way to reach
+              me.
+            </p>
+            <div className="flex flex-wrap gap-3 xl:justify-end">
+              {["reply by email", "project discussions", "freelance and product work"].map(
+                (item) => (
+                  <span
+                    key={item}
+                    className="rounded-full border border-border/70 px-4 py-2 text-xs uppercase tracking-[0.22em] text-muted-foreground"
+                  >
+                    {item}
+                  </span>
+                ),
+              )}
+            </div>
+          </div>
+        </div>
+
+        <div className="grid items-start gap-6 xl:grid-cols-[minmax(0,0.76fr)_minmax(0,1.24fr)]">
+          <div className="flex flex-col gap-4 self-start">
+            {contactChannels.map((channel, index) => {
+              const Icon = channel.icon;
+
+              return (
+                <Link
+                  key={channel.title}
+                  href={channel.href}
+                  target={channel.href.startsWith("http") ? "_blank" : undefined}
+                  rel={channel.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                  className="group relative overflow-hidden rounded-[1.9rem] border border-border/70 p-5 transition-transform duration-300 hover:-translate-y-1"
+                  style={{
+                    background:
+                      index % 2 === 0
+                        ? "linear-gradient(150deg, color-mix(in oklch, var(--background) 92%, var(--primary) 8%), color-mix(in oklch, var(--background) 98%, var(--primary) 2%))"
+                        : "linear-gradient(150deg, color-mix(in oklch, var(--background) 92%, var(--secondary) 8%), color-mix(in oklch, var(--background) 98%, var(--secondary) 2%))",
+                  }}
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="space-y-3">
+                      <span className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border/70 bg-background/70">
+                        <Icon className="h-4 w-4" />
+                      </span>
+                      <div className="space-y-2">
+                        <h3 className="font-incognito text-3xl leading-none">{channel.title}</h3>
+                        <p className="max-w-md text-sm leading-6 text-muted-foreground">
+                          {channel.description}
+                        </p>
+                      </div>
+                    </div>
+
+                    <ArrowUpRight className="h-5 w-5 shrink-0 text-muted-foreground transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-foreground" />
                   </div>
-                  <div>
-                    <Label htmlFor="lastName">Last Name</Label>
-                    <Input name="lastName" id="lastName" placeholder="Last name" />
-                  </div>
-                  <div className="col-span-2">
-                    <Label htmlFor="email">Email</Label>
-                    <Input name="email" id="email" type="email" placeholder="Email" required />
-                  </div>
-                  <div className="col-span-2">
-                    <Label htmlFor="message">Message</Label>
-                    <Textarea name="message" id="message" placeholder="Message" rows={6} required />
-                  </div>
+
+                  <p className="mt-6 text-sm font-medium tracking-[0.02em] text-foreground/90">
+                    {channel.value}
+                  </p>
+                </Link>
+              );
+            })}
+          </div>
+
+          <div className="relative self-start overflow-hidden rounded-[2.25rem] border border-border/70">
+            <div
+              aria-hidden="true"
+              className="absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(155deg, color-mix(in oklch, var(--primary) 8%, transparent), transparent 38%, color-mix(in oklch, var(--secondary) 12%, transparent))",
+              }}
+            />
+
+            <div className="relative z-10 p-5 md:p-7">
+              <div className="grid gap-6 lg:grid-cols-[minmax(0,0.62fr)_minmax(0,1.38fr)]">
+                <div className="space-y-3">
+                  <p className="text-[0.72rem] uppercase tracking-[0.24em] text-muted-foreground">
+                    Message form
+                  </p>
+                  <h3 className="font-incognito text-4xl leading-none md:text-5xl">Send a note</h3>
+                  <p className="max-w-[16rem] text-sm leading-6 text-muted-foreground">
+                    A short, specific message works best. Tell me what you need and how to follow
+                    up.
+                  </p>
                 </div>
-                <Button className="mt-6 w-full" size="lg" disabled={loading}>
-                  {loading ? "Sending..." : "Submit"}
-                </Button>
-                {status && (
-                  <p className="mt-4 text-center text-sm text-muted-foreground">{status}</p>
-                )}
-              </form>
-            </CardContent>
-          </Card>
+
+                <form onSubmit={handleSubmit} className="grid gap-5">
+                  <div className="grid gap-5 md:grid-cols-2">
+                    <div className="space-y-2">
+                      <Label htmlFor="firstName">First name</Label>
+                      <Input
+                        name="firstName"
+                        id="firstName"
+                        placeholder="Marcus"
+                        required
+                        className="h-12 rounded-2xl border-border/70 bg-background/70 px-4"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="lastName">Last name</Label>
+                      <Input
+                        name="lastName"
+                        id="lastName"
+                        placeholder="Nguyen"
+                        className="h-12 rounded-2xl border-border/70 bg-background/70 px-4"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="email">Email</Label>
+                    <Input
+                      name="email"
+                      id="email"
+                      type="email"
+                      placeholder="name@company.com"
+                      required
+                      className="h-12 rounded-2xl border-border/70 bg-background/70 px-4"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="message">Message</Label>
+                    <Textarea
+                      name="message"
+                      id="message"
+                      placeholder="A few lines about the project, role, or conversation you want to have."
+                      rows={7}
+                      required
+                      className="min-h-40 rounded-[1.6rem] border-border/70 bg-background/70 px-4 py-3"
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-3 pt-2">
+                    <Button
+                      className="h-12 rounded-full px-6 text-sm uppercase tracking-[0.18em]"
+                      size="lg"
+                      disabled={loading}
+                    >
+                      {loading ? "Sending..." : "Send message"}
+                    </Button>
+
+                    {status ? (
+                      <p
+                        className="rounded-2xl border px-4 py-3 text-sm"
+                        style={{
+                          borderColor:
+                            status.type === "success"
+                              ? "color-mix(in oklch, var(--primary) 35%, var(--border) 65%)"
+                              : "color-mix(in oklch, var(--destructive) 40%, var(--border) 60%)",
+                          background:
+                            status.type === "success"
+                              ? "color-mix(in oklch, var(--primary) 8%, var(--background) 92%)"
+                              : "color-mix(in oklch, var(--destructive) 8%, var(--background) 92%)",
+                        }}
+                      >
+                        {status.message}
+                      </p>
+                    ) : null}
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

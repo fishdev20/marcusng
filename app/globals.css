@@ -155,7 +155,7 @@ html {
 }
 
 body {
-  background-image: url("../public/noise.png");
+  /* background-image: url("../public/noise.png"); */
   overflow-x: hidden !important;
 }
 
