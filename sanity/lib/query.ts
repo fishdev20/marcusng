@@ -5,8 +5,16 @@ import { Profile } from "@/types/profile";
 import type { Project } from "@/types/project";
 import { groq } from "next-sanity";
 
+const SANITY_REVALIDATE_SECONDS = 60;
+
+function sanityFetch<T>(query: string, params?: Record<string, string>) {
+  return client.fetch<T>(query, params ?? {}, {
+    next: { revalidate: SANITY_REVALIDATE_SECONDS },
+  });
+}
+
 export async function getExperiences(): Promise<Experience[]> {
-  return client.fetch(
+  return sanityFetch(
     groq`*[_type == "experience"] | order(startDate desc) {
       _id,
       _type,
@@ -29,7 +37,7 @@ export async function getExperiences(): Promise<Experience[]> {
 }
 
 export async function getProfile(): Promise<Profile> {
-  return client.fetch(
+  return sanityFetch(
     groq`*[_type == "profile"][0]{
       _id,
       fullName,
@@ -61,7 +69,7 @@ export async function getProfile(): Promise<Profile> {
 }
 
 export async function getProjects(): Promise<Project[]> {
-  return client.fetch(
+  return sanityFetch(
     groq`*[_type == "project"] | order(_createdAt asc) {
       _id,
       title,
@@ -84,7 +92,7 @@ export async function getProjects(): Promise<Project[]> {
 }
 
 export async function getAllPets(): Promise<Pet[]> {
-  return client.fetch(
+  return sanityFetch(
     groq`*[_type == "pet"] | order(_createdAt desc) {
       _id,
       name,
@@ -111,7 +119,7 @@ export async function getAllPets(): Promise<Pet[]> {
 }
 
 export async function getPetBySlug(slug: string): Promise<Pet | null> {
-  return client.fetch(
+  return sanityFetch(
     groq`*[_type == "pet" && slug.current == $slug][0]{
       _id,
       name,

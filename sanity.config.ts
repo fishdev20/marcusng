@@ -8,7 +8,7 @@ export default defineConfig({
   title: "Marcusng site",
   projectId,
   dataset,
-  basePath: "/studio",
+  basePath: "/studio/portfolio",
   plugins: [deskTool(), table()],
   schema: { types: schema.types },
 });
