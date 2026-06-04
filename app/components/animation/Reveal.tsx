@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { motion, useInView, useReducedMotion } from "framer-motion";
+import { motion, useInView, useReducedMotion } from "motion/react";
 import { ReactNode, useRef } from "react";
 
 type RevealProps = {

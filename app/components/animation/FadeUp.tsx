@@ -1,5 +1,5 @@
 "use client";
-import { motion, useInView, Variants } from "framer-motion";
+import { motion, useInView, Variants } from "motion/react";
 import * as React from "react";
 
 interface FadeUpProps {

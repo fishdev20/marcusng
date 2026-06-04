@@ -78,7 +78,7 @@ export default function ContactSection() {
   };
 
   return (
-    <section className="mx-auto w-full max-w-6xl px-6 pb-24 pt-10 md:px-16" id="contact">
+    <section className="mx-auto w-full max-w-7xl px-6 pb-24 pt-10 md:px-16" id="contact">
       <div className="space-y-8">
         <Reveal
           direction="up"
@@ -87,15 +87,11 @@ export default function ContactSection() {
           <div className="space-y-4">
             <p className="text-[0.72rem] uppercase tracking-[0.32em] text-primary">Contact</p>
             <h2 className="max-w-xl font-incognito text-[clamp(2.6rem,5.2vw,4.8rem)] leading-[0.95] tracking-[-0.04em]">
-              Open for projects, roles, and direct conversations.
+              Open for conversations.
             </h2>
           </div>
 
           <div className="flex flex-col gap-4 xl:items-end">
-            <p className="max-w-lg text-base leading-7 text-muted-foreground md:text-lg xl:text-right">
-              If there is something worth building or discussing, this is the cleanest way to reach
-              me.
-            </p>
             <div className="flex flex-wrap gap-3 xl:justify-end">
               {["reply by email", "project discussions", "freelance and product work"].map(
                 (item) => (
@@ -131,22 +127,19 @@ export default function ContactSection() {
                   }}
                 >
                   <div className="flex items-start justify-between gap-4">
-                    <div className="space-y-3">
+                    <div className="flex items-center gap-2">
                       <span className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border/70 bg-background/70">
                         <Icon className="h-4 w-4" />
                       </span>
                       <div className="space-y-2">
                         <h3 className="font-incognito text-3xl leading-none">{channel.title}</h3>
-                        <p className="max-w-md text-sm leading-6 text-muted-foreground">
-                          {channel.description}
-                        </p>
                       </div>
                     </div>
 
                     <ArrowUpRight className="h-5 w-5 shrink-0 text-muted-foreground transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-foreground" />
                   </div>
 
-                  <p className="mt-6 text-sm font-medium tracking-[0.02em] text-foreground/90">
+                  <p className="mt-4 text-sm font-medium tracking-[0.02em] text-foreground/90">
                     {channel.value}
                   </p>
                 </Link>

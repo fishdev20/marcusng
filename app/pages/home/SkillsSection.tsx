@@ -1,79 +1,55 @@
 import SectionWrapper from "@/components/ui/section-wrapper";
 import { skills, type SkillCategory } from "@/constants/skill";
-import { cn, getDevIcon } from "@/lib/utils";
-import { Blocks, Brain, Brush, Code2, Database, Orbit } from "lucide-react";
+import { getDevIcon } from "@/lib/utils";
+import { Blocks, Brain, Code2, Database, Orbit } from "lucide-react";
 import Image from "next/image";
 
-const categoryMeta: Record<
-  SkillCategory,
+type StackLane = {
+  title: string;
+  label: string;
+  description: string;
+  tint: string;
+  icon: typeof Code2;
+  categories: SkillCategory[];
+};
+
+const stackLanes: StackLane[] = [
   {
-    title: string;
-    eyebrow: string;
-    description: string;
-    tint: string;
-    icon: typeof Code2;
-    gridClass: string;
-    wordClass: string;
-    compact?: boolean;
-  }
-> = {
-  languages: {
-    title: "Languages",
-    eyebrow: "Programming",
-    description: "Languages I have worked with regularly across product and backend work.",
-    tint: "var(--primary)",
-    icon: Code2,
-    gridClass: "xl:col-span-5 xl:-rotate-[1.2deg]",
-    wordClass: "right-4 top-3",
-  },
-  frontend: {
-    title: "Frontend",
-    eyebrow: "Client-side",
-    description: "Frameworks and libraries I use to build interfaces and frontend systems.",
+    title: "Product interfaces",
+    label: "Frontend and UI",
+    description:
+      "The tools I reach for when the work is interaction, layout, motion, and reusable interface systems.",
     tint: "var(--secondary)",
     icon: Orbit,
-    gridClass: "xl:col-span-7 xl:rotate-[0.8deg]",
-    wordClass: "right-4 bottom-0",
+    categories: ["frontend", "ui"],
   },
-  ui: {
-    title: "UI",
-    eyebrow: "Styling",
-    description: "Design systems, styling tools, and component libraries I am familiar with.",
+  {
+    title: "Application systems",
+    label: "Languages and backend",
+    description:
+      "Languages, frameworks, databases, and services I use to shape product logic and data flows.",
     tint: "var(--primary)",
-    icon: Brush,
-    gridClass: "md:col-span-1 xl:col-span-4",
-    wordClass: "right-3 top-2",
-    compact: true,
-  },
-  backend: {
-    title: "Backend",
-    eyebrow: "Server-side",
-    description: "Backend frameworks, databases, and services I have used in real projects.",
-    tint: "var(--secondary)",
     icon: Database,
-    gridClass: "md:col-span-1 xl:col-span-4",
-    wordClass: "right-3 top-2",
-    compact: true,
+    categories: ["languages", "backend"],
   },
-  devops: {
-    title: "DevOps",
-    eyebrow: "Infra & delivery",
-    description: "Tools I use for version control, deployment workflows, and infrastructure work.",
-    tint: "var(--primary)",
-    icon: Blocks,
-    gridClass: "md:col-span-1 xl:col-span-4",
-    wordClass: "right-3 top-2",
-    compact: true,
-  },
-  other: {
-    title: "Other",
-    eyebrow: "Supporting tools",
-    description: "Additional technologies that show up often in the products I build.",
+  {
+    title: "Shipping work",
+    label: "Delivery tools",
+    description:
+      "The supporting toolkit around deployment, version control, infrastructure, and everyday product work.",
     tint: "var(--secondary)",
-    icon: Brain,
-    gridClass: "md:col-span-2 xl:col-span-12",
-    wordClass: "right-4 bottom-0",
+    icon: Blocks,
+    categories: ["devops", "other"],
   },
+];
+
+const categoryLabels: Record<SkillCategory, string> = {
+  languages: "Languages",
+  frontend: "Frontend",
+  ui: "UI",
+  backend: "Backend",
+  devops: "DevOps",
+  other: "Other",
 };
 
 function SkillChip({ skill, tint }: { skill: string; tint: string }) {
@@ -107,82 +83,62 @@ function SkillChip({ skill, tint }: { skill: string; tint: string }) {
   );
 }
 
-function SkillPanel({ category }: { category: SkillCategory }) {
-  const meta = categoryMeta[category];
-  const Icon = meta.icon;
-  const items = skills[category];
+function StackLaneCard({ lane, index }: { lane: StackLane; index: number }) {
+  const Icon = lane.icon;
 
   return (
-    <article
-      className={cn(
-        "group relative overflow-hidden rounded-[2rem] border p-5 md:p-6",
-        "transition-transform duration-300 hover:-translate-y-1",
-        meta.gridClass,
-      )}
-      style={{
-        borderColor: `color-mix(in oklch, var(--border) 72%, ${meta.tint} 28%)`,
-        background: `linear-gradient(145deg, color-mix(in oklch, var(--background) 91%, ${meta.tint} 9%), color-mix(in oklch, var(--background) 97%, ${meta.tint} 3%))`,
-      }}
-    >
+    <article className="relative overflow-hidden rounded-2xl border border-border/70">
       <div
         aria-hidden="true"
-        className={cn(
-          "pointer-events-none absolute font-incognito text-[clamp(3rem,8vw,6.5rem)] uppercase tracking-[-0.08em] text-foreground/[0.045]",
-          meta.wordClass,
-        )}
-      >
-        {meta.title}
-      </div>
-
-      <div
-        aria-hidden="true"
-        className="absolute inset-x-6 top-0 h-px"
+        className="absolute inset-0"
         style={{
-          background: `linear-gradient(90deg, transparent, color-mix(in oklch, ${meta.tint} 56%, transparent), transparent)`,
+          background:
+            index % 2 === 0
+              ? "linear-gradient(150deg, color-mix(in oklch, var(--background) 92%, var(--secondary) 8%), color-mix(in oklch, var(--background) 98%, var(--primary) 4%))"
+              : "linear-gradient(150deg, color-mix(in oklch, var(--background) 90%, var(--primary) 10%), color-mix(in oklch, var(--background) 98%, var(--secondary) 4%))",
         }}
       />
 
-      <div className="relative z-10 flex flex-col gap-6">
-        <div
-          className={cn(
-            "grid gap-4",
-            meta.compact ? "md:grid-cols-1" : "md:grid-cols-[0.9fr_1.1fr]",
-          )}
-        >
-          <div className="space-y-3">
-            <div className="flex items-center gap-3">
-              <span
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full border"
-                style={{
-                  borderColor: `color-mix(in oklch, var(--border) 70%, ${meta.tint} 30%)`,
-                  background: `color-mix(in oklch, ${meta.tint} 12%, var(--background) 88%)`,
-                }}
-              >
-                <Icon className="h-4 w-4" />
-              </span>
-              <div className="space-y-1">
-                <p className="text-[0.7rem] uppercase tracking-[0.24em] text-muted-foreground">
-                  {meta.eyebrow}
-                </p>
-                <h3 className="font-incognito text-3xl leading-none md:text-4xl">{meta.title}</h3>
-              </div>
+      <div className="relative z-10 grid gap-7 p-5 md:p-6 xl:grid-cols-[minmax(14rem,0.46fr)_minmax(0,1fr)] xl:p-7">
+        <div className="space-y-5">
+          <div className="flex items-center gap-3">
+            <span
+              className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border"
+              style={{
+                borderColor: `color-mix(in oklch, var(--border) 70%, ${lane.tint} 30%)`,
+                background: `color-mix(in oklch, ${lane.tint} 12%, var(--background) 88%)`,
+              }}
+            >
+              <Icon className="h-4 w-4" />
+            </span>
+            <div className="min-w-0 space-y-1.5">
+              <p className="text-[0.7rem] uppercase tracking-[0.22em] text-muted-foreground">
+                {lane.label}
+              </p>
+              <h3 className="font-incognito text-3xl leading-[0.98] tracking-[-0.01em] md:text-[2.4rem]">
+                {lane.title}
+              </h3>
             </div>
-
-            <p className="max-w-sm text-sm leading-6 text-muted-foreground md:text-[0.95rem]">
-              {meta.description}
-            </p>
           </div>
 
-          <div className="flex flex-col gap-3">
-            <p className="text-[0.72rem] uppercase tracking-[0.22em] text-muted-foreground">
-              Current toolkit
-            </p>
-            <ul className="flex flex-wrap gap-2.5">
-              {items.map((skill) => (
-                <SkillChip key={skill} skill={skill} tint={meta.tint} />
-              ))}
-            </ul>
-          </div>
+          <p className="max-w-md text-sm leading-6 text-muted-foreground md:text-[0.95rem]">
+            {lane.description}
+          </p>
+        </div>
+
+        <div className="grid gap-5 md:grid-cols-2">
+          {lane.categories.map((category) => (
+            <div key={category} className="space-y-3">
+              <p className="text-[0.72rem] uppercase tracking-[0.22em] text-muted-foreground">
+                {categoryLabels[category]}
+              </p>
+              <ul className="flex flex-wrap gap-3">
+                {skills[category].map((skill) => (
+                  <SkillChip key={skill} skill={skill} tint={lane.tint} />
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
       </div>
     </article>
@@ -191,25 +147,25 @@ function SkillPanel({ category }: { category: SkillCategory }) {
 
 export default function SkillsSection() {
   return (
-    <SectionWrapper className="my-24 gap-8 md:my-32">
-      <div className="space-y-4">
-        <p className="text-[0.72rem] uppercase tracking-[0.32em] text-primary">Tools & Stack</p>
-        <h2 className="w-full font-incognito text-[clamp(2.8rem,6vw,5.2rem)] leading-[0.94] tracking-[-0.04em]">
-          Languages, frameworks, and tools I have worked with.
-        </h2>
-        <p className="max-w-xl text-base leading-7 text-muted-foreground md:text-lg">
-          A straightforward overview of the technologies I am comfortable using across frontend,
-          backend, UI, and deployment work.
+    <SectionWrapper reveal={false} className="my-24 gap-10 md:my-32 md:gap-14">
+      <div className="grid gap-6 xl:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] xl:items-end">
+        <div className="space-y-4">
+          <p className="text-[0.72rem] uppercase tracking-[0.32em] text-primary">Tools & Stack</p>
+          <h2 className="max-w-4xl text-balance font-incognito text-[clamp(2.65rem,5.4vw,4.8rem)] leading-[0.98] tracking-[-0.03em]">
+            A practical stack for building and shipping.
+          </h2>
+        </div>
+
+        <p className="max-w-xl text-pretty text-base leading-7 text-muted-foreground md:text-lg xl:ml-auto xl:text-right">
+          Technologies grouped by how I use them in real projects: shaping interfaces, building
+          systems, and getting work into production.
         </p>
       </div>
 
-      <div className="grid gap-4 xl:grid-cols-12">
-        <SkillPanel category="languages" />
-        <SkillPanel category="frontend" />
-        <SkillPanel category="ui" />
-        <SkillPanel category="backend" />
-        <SkillPanel category="devops" />
-        <SkillPanel category="other" />
+      <div className="grid gap-5 md:gap-6">
+        {stackLanes.map((lane, index) => (
+          <StackLaneCard key={lane.title} lane={lane} index={index} />
+        ))}
       </div>
     </SectionWrapper>
   );
