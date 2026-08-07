@@ -1,6 +1,8 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { drop004Sound } from "@/lib/drop-004";
+import { playSound } from "@/lib/sound-engine";
 import { motion, type Variants, useReducedMotion } from "motion/react";
 import { useTheme } from "next-themes";
 import { useCallback, useEffect } from "react";
@@ -93,6 +95,12 @@ function isEditableTarget(target: EventTarget | null) {
   );
 }
 
+function playThemeToggleSound() {
+  void playSound(drop004Sound.dataUri, { volume: 0.35 }).catch(() => {
+    // Theme switching should still work when browser audio is unavailable.
+  });
+}
+
 export function ThemeToggle() {
   const reduceMotion = useReducedMotion();
   const { resolvedTheme, systemTheme, setTheme } = useTheme();
@@ -101,6 +109,8 @@ export function ThemeToggle() {
 
   const switchTheme = useCallback(async () => {
     const next = currentTheme === "dark" ? "light" : "dark";
+    playThemeToggleSound();
+
     const applyTheme = () => {
       setTheme(next === systemTheme ? "system" : next);
       setMetaColor(META_THEME_COLORS[next]);
