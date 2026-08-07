@@ -15,22 +15,37 @@ function sanityFetch<T>(query: string, params?: Record<string, string>) {
 
 export async function getExperiences(): Promise<Experience[]> {
   return sanityFetch(
-    groq`*[_type == "experience"] | order(startDate desc) {
+    groq`*[_type == "experience"] | order(coalesce(positions[0].startDate, startDate) desc) {
       _id,
       _type,
-      company,
+      "company": coalesce(companyName, company),
+      companyWebsite,
+      location,
+      workType,
+      isCurrentEmployer,
+      positions[]{
+        _key,
+        title,
+        employmentType,
+        startDate,
+        endDate,
+        isCurrent,
+        description,
+        highlights,
+        technologies,
+        isExpanded
+      },
       role,
       employmentType,
       startDate,
       endDate,
       isCurrent,
-      location,
       description,
       highlights,
       technologies,
       "logo": {
-        alt,
-        "url": logo.asset->url
+        "alt": coalesce(companyLogo.alt, logo.alt),
+        "url": coalesce(companyLogo.asset->url, logo.asset->url)
       }
     }`,
   );

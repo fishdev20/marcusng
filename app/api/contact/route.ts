@@ -2,28 +2,51 @@ import { ContactEmail } from "@/app/components/ContactEmail";
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
-export async function POST(req: Request) {
-  const resend = new Resend(process.env.RESEND_API_KEY!);
+type ContactRequest = {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  message?: string;
+};
+
+export async function POST(request: Request) {
   try {
-    const { firstName, lastName, email, message } = await req.json();
+    const body = (await request.json()) as ContactRequest;
+    const firstName = body.firstName?.trim();
+    const lastName = body.lastName?.trim();
+    const email = body.email?.trim();
+    const message = body.message?.trim();
 
     if (!firstName || !email || !message) {
-      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+      return NextResponse.json({ error: "Please complete all required fields." }, { status: 400 });
     }
 
-    const fullName = `${firstName} ${lastName ?? ""}`.trim();
+    const apiKey = process.env.RESEND_API_KEY;
 
-    await resend.emails.send({
+    if (!apiKey) {
+      return NextResponse.json({ error: "Email service is not configured." }, { status: 503 });
+    }
+
+    const fullName = [firstName, lastName].filter(Boolean).join(" ");
+    const resend = new Resend(apiKey);
+    const { error } = await resend.emails.send({
       from: "Minh Nguyen <onboarding@resend.dev>",
-      to: "minhfish20hp@gmail.com",
+      to: process.env.CONTACT_EMAIL || "minhfish20hp@gmail.com",
       subject: `New message from ${fullName}`,
       react: ContactEmail({ fullName, email, message }),
       replyTo: email,
     });
 
+    if (error) {
+      throw error;
+    }
+
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("Resend Error:", error);
-    return NextResponse.json({ error: "Failed to send message" }, { status: 500 });
+    console.error("Resend contact error:", error);
+    return NextResponse.json(
+      { error: "Message could not be sent. Please try again." },
+      { status: 500 },
+    );
   }
 }

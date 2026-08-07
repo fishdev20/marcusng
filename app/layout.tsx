@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import { gitlabmono, incognito } from "../assets/font/font";
+import { Funnel_Sans } from "next/font/google";
+import { gitlabmono } from "../assets/font/font";
 import "./globals.css";
 
-const inter = Inter({
+const funnelSans = Funnel_Sans({
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
   display: "swap",
-  variable: "--inter",
+  variable: "--font-funnel-sans",
 });
 
 export const metadata: Metadata = {
@@ -25,7 +26,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${incognito.variable} ${inter.className} ${gitlabmono.variable} relative`}>
+      <body
+        className={`${funnelSans.variable} ${funnelSans.className} ${gitlabmono.variable} relative`}
+      >
         {children}
       </body>
     </html>
