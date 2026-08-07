@@ -1,6 +1,7 @@
 import { ArrowLeft, type LucideIcon } from "lucide-react";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { TextReveal, TextRevealBlock } from "@/components/text-reveal";
 export function SectionCorners() {
   const cornerClass =
     "pointer-events-none absolute z-[1] size-2.5 rotate-45 rounded-[2px] border bg-background";
@@ -51,10 +52,12 @@ export function PageHero({
         <span className="h-1.5 w-1.5 rounded-full bg-success" /> {label}
       </p>
       <h1 className="max-w-180 text-balance font-incognito text-[clamp(36px,7vw,64px)] font-semibold leading-[0.96] tracking-[-0.03em] text-foreground">
-        {title}
+        <TextReveal text={title} className="flex" />
       </h1>
       {description ? (
-        <p className="mt-5 max-w-150 text-[14px] leading-6 text-muted-foreground">{description}</p>
+        <TextRevealBlock className="mt-5 max-w-150" delay={0.62}>
+          <p className="text-[14px] leading-6 text-muted-foreground">{description}</p>
+        </TextRevealBlock>
       ) : null}
     </section>
   );
@@ -123,13 +126,15 @@ export function DetailHeader({
       </Link>
 
       <h1 className="mt-10 max-w-[760px] text-balance font-incognito text-[clamp(38px,7vw,68px)] font-semibold leading-[0.96] tracking-[-0.035em] text-foreground">
-        {title}
+        <TextReveal text={title} className="flex" />
       </h1>
 
       {description ? (
-        <p className="mt-6 max-w-[680px] text-[15px] font-medium leading-7 text-muted-foreground sm:text-[16px] sm:leading-8">
-          {description}
-        </p>
+        <TextRevealBlock className="mt-6 max-w-[680px]" delay={0.62}>
+          <p className="text-[15px] font-medium leading-7 text-muted-foreground sm:text-[16px] sm:leading-8">
+            {description}
+          </p>
+        </TextRevealBlock>
       ) : null}
 
       {actions ? <div className="mt-8 flex flex-wrap gap-3">{actions}</div> : null}

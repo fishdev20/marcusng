@@ -1,4 +1,5 @@
 import type { Profile } from "@/types/profile";
+import { TextReveal, TextRevealBlock } from "@/components/text-reveal";
 import { Github, type LucideIcon, Linkedin, Twitch, Twitter } from "lucide-react";
 import Link from "next/link";
 import { FlyingPortrait } from "./flying-portrait";
@@ -36,22 +37,26 @@ export function HeroSection({ profile }: { profile: Profile | null }) {
           Open to work
         </p>
 
-        <h1 className="max-w-[620px] text-balance text-[clamp(32px,5vw,48px)] font-semibold leading-[1.02] tracking-[-0.02em] text-foreground">
-          Hello, I am
+        <h1 className="flex max-w-[620px] flex-wrap items-baseline gap-x-[0.24em] text-balance text-[clamp(32px,5vw,48px)] font-semibold leading-[1.02] tracking-[-0.02em] text-foreground">
+          <TextReveal text="Hello, I am" />
           {profile?.profileImage?.url ? (
             <FlyingPortrait
               src={profile.profileImage.url}
               alt={profile.profileImage.alt || `${profile.fullName} portrait`}
             />
           ) : null}
-          {profile?.fullName || "Marcus Nguyen"}
-          <span className="block">{headline}</span>
+          <TextReveal text={profile?.fullName || "Marcus Nguyen"} delay={0.31} />
+          <span className="basis-full">
+            <TextReveal text={headline} delay={0.45} />
+          </span>
         </h1>
 
-        <p className="mt-4 max-w-[500px] text-[14px] leading-6 text-muted-foreground">
-          {profile?.shortBio ||
-            "Building polished web products with clear interfaces and dependable systems."}
-        </p>
+        <TextRevealBlock className="mt-4 max-w-[500px]" delay={0.72}>
+          <p className="text-[14px] leading-6 text-muted-foreground">
+            {profile?.shortBio ||
+              "Building polished web products with clear interfaces and dependable systems."}
+          </p>
+        </TextRevealBlock>
 
         {socialLinks.length ? (
           <nav
