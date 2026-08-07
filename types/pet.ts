@@ -1,7 +1,6 @@
-export interface Tech {
-  name: string;
-  icon?: string;
-}
+import type { Technology } from "./technology";
+
+export type Tech = Technology;
 
 export interface Pet {
   _id: string;

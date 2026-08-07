@@ -1,33 +1,19 @@
 import type { ExperienceItemType, ExperiencePositionItemType } from "@/components/work-experience";
-import { skills } from "@/constants/skill";
 import { fallbackTestimonials } from "@/constants/testimonial";
 import { getLatestBlogs } from "@/lib/blog";
-import { getExperiences, getProfile, getProjects, getTestimonials } from "@/sanity/lib/query";
+import {
+  getExperiences,
+  getProfile,
+  getProjects,
+  getSkills,
+  getTestimonials,
+} from "@/sanity/lib/query";
 import type { IBlogCard } from "@/types/blog";
 import type { Experience, ExperiencePosition } from "@/types/experience";
 import type { Profile } from "@/types/profile";
 import type { Project } from "@/types/project";
 import type { Testimonial } from "@/types/testimonial";
-
-export const stackGroupConfig = [
-  { label: "Language", items: [...skills.languages, "python"] },
-  {
-    label: "Frontend",
-    items: [...skills.frontend, ...skills.ui, "expo", "base ui", "radix ui", "motion"],
-  },
-  {
-    label: "Backend & Database",
-    items: [...skills.backend, ...skills.other],
-  },
-  {
-    label: "Workflow & AI",
-    items: [...skills.devops, "codex", "gemini", "chatgpt", "vercel"],
-  },
-  {
-    label: "Design",
-    items: ["figma"],
-  },
-];
+import type { SkillGroup } from "@/types/technology";
 
 export function formatMonthYear(date?: string | null) {
   if (!date) return null;
@@ -105,147 +91,14 @@ export function sortProjects(projects: Project[]) {
   });
 }
 
-export function normalizeStackSkill(skill: string) {
-  return skill
-    .toLowerCase()
-    .trim()
-    .replace(/\+\+/g, "plusplus")
-    .replace(/#/g, "sharp")
-    .replace(/[._-]+/g, " ")
-    .replace(/\s+/g, " ");
-}
-
-export function stackSkillAliases(skill: string) {
-  const normalized = normalizeStackSkill(skill);
-  const aliases: Record<string, string> = {
-    "next js": "nextjs",
-    "node js": "nodejs",
-    "vue js": "vuejs",
-    "material ui": "mui",
-    materialui: "mui",
-    "shadcn ui": "shadcn ui",
-    tailwindcss: "tailwind css",
-    postgres: "postgresql",
-    mongo: "mongodb",
-    "spring boot": "springboot",
-    reactquery: "react query",
-    "mobx state tree": "mobx state tree",
-    "google cloud": "google cloud platform",
-    googlecloud: "google cloud platform",
-    "google cloud platform": "google cloud platform",
-    posthog: "posthog",
-    "post hog": "posthog",
-    openpanel: "openpanel",
-    "open panel": "openpanel",
-    "ci cd": "ci/cd",
-    "c plusplus": "cplusplus",
-    "c++": "cplusplus",
-  };
-
-  return aliases[normalized] || normalized;
-}
-
-export function formatStackLabel(skill: string) {
-  const normalizedSkill = stackSkillAliases(skill);
-  const labels: Record<string, string> = {
-    javascript: "JavaScript",
-    typescript: "TypeScript",
-    java: "Java",
-    go: "Go",
-    html: "HTML",
-    css: "CSS",
-    react: "React",
-    "react native": "React Native",
-    nextjs: "Next.js",
-    "next js": "Next.js",
-    redux: "Redux",
-    zustand: "Zustand",
-    "react query": "React Query",
-    vuejs: "Vue.js",
-    "tailwind css": "Tailwind CSS",
-    sass: "Sass",
-    mui: "Material UI",
-    "material ui": "Material UI",
-    "base ui": "Base UI",
-    "radix ui": "Radix UI",
-    "ant design": "Ant Design",
-    "shadcn ui": "shadcn/ui",
-    motion: "Motion",
-    expo: "Expo",
-    electron: "Electron",
-    tanstack: "TanStack",
-    nodejs: "Node.js",
-    bun: "Bun",
-    springboot: "Spring Boot",
-    "spring boot": "Spring Boot",
-    firebase: "Firebase",
-    mongodb: "MongoDB",
-    postgresql: "PostgreSQL",
-    sqlite: "SQLite",
-    nginx: "nginx",
-    docker: "Docker",
-    aws: "AWS",
-    azure: "Azure",
-    k8s: "K8s",
-    kubernetes: "Kubernetes",
-    vercel: "Vercel",
-    git: "Git",
-    github: "GitHub",
-    gitlab: "GitLab",
-    "ci/cd": "CI/CD",
-    redis: "Redis",
-    rabbitmq: "RabbitMQ",
-    "rabbit mq": "RabbitMQ",
-    openlayers: "OpenLayers",
-    "open layers": "OpenLayers",
-    "robot framework": "Robot Framework",
-    robotframework: "Robot Framework",
-    "google cloud platform": "Google Cloud",
-    figma: "Figma",
-    cursor: "Cursor",
-    claude: "Claude",
-    gemini: "Gemini",
-    chatgpt: "ChatGPT",
-    photoshop: "Photoshop",
-    posthog: "PostHog",
-    openpanel: "OpenPanel",
-    paper: "Paper",
-    "mobx state tree": "MobX-State-Tree",
-    websocket: "WebSocket",
-  };
-
-  return labels[normalizedSkill] || skill;
-}
-
-export function getStackGroups(profileSkills?: string[]) {
-  const cleanProfileSkills =
-    profileSkills?.map((skill) => skill.trim()).filter((skill) => skill.length > 0) ?? [];
-
-  if (!cleanProfileSkills.length) {
-    return stackGroupConfig.map((group, index) => ({
-      ...group,
+export function getStackGroups(skillGroups?: SkillGroup[]) {
+  return (skillGroups ?? [])
+    .filter((group) => group.items?.length)
+    .map((group, index) => ({
+      label: group.name,
+      items: group.items,
       index,
     }));
-  }
-
-  const groups = stackGroupConfig.map((group) => ({
-    ...group,
-    items: [] as string[],
-  }));
-
-  cleanProfileSkills.forEach((skill) => {
-    const normalizedSkill = stackSkillAliases(skill);
-    const groupIndex = stackGroupConfig.findIndex((item) =>
-      item.items.some((groupSkill) => stackSkillAliases(groupSkill) === normalizedSkill),
-    );
-    const group = groups[groupIndex >= 0 ? groupIndex : groups.length - 1];
-
-    if (!group.items.some((item) => stackSkillAliases(item) === normalizedSkill)) {
-      group.items.push(skill);
-    }
-  });
-
-  return groups.map((group, index) => ({ ...group, index })).filter((group) => group.items.length);
 }
 
 export function getExperienceDescription(position: ExperiencePosition) {
@@ -323,9 +176,10 @@ export function toWorkExperienceItems(experiences: Experience[]): ExperienceItem
 }
 
 export async function loadPortfolioData() {
-  const [profile, experiences, projects, posts, sanityTestimonials] = await Promise.all([
+  const [profile, experiences, skills, projects, posts, sanityTestimonials] = await Promise.all([
     getProfile().catch(() => null) as Promise<Profile | null>,
     getExperiences().catch(() => []) as Promise<Experience[]>,
+    getSkills().catch(() => []) as Promise<SkillGroup[]>,
     getProjects().catch(() => []) as Promise<Project[]>,
     getLatestBlogs(3).catch(() => []) as Promise<IBlogCard[]>,
     getTestimonials().catch(() => []) as Promise<Testimonial[]>,
@@ -334,6 +188,7 @@ export async function loadPortfolioData() {
   return {
     profile,
     experiences,
+    skills,
     projects: sortProjects(projects),
     posts,
     testimonials: sanityTestimonials.length ? sanityTestimonials : fallbackTestimonials,

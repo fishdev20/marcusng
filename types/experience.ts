@@ -1,5 +1,7 @@
 // types/experience.ts
 
+import type { Technology } from "./technology";
+
 export interface ExperiencePosition {
   _key?: string;
   title?: string;
@@ -9,7 +11,7 @@ export interface ExperiencePosition {
   isCurrent?: boolean;
   description?: string;
   highlights?: string[];
-  technologies?: string[];
+  technologies?: Technology[];
   isExpanded?: boolean;
 }
 
@@ -35,5 +37,5 @@ export interface Experience {
   isCurrent?: boolean;
   description?: string;
   highlights?: string[];
-  technologies?: string[];
+  technologies?: Technology[];
 }

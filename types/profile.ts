@@ -20,7 +20,6 @@ export interface Profile {
     twitter?: string;
     twitch?: string;
   };
-  skills?: string[];
   education?: {
     school: string;
     logo?: { url?: string; alt?: string };

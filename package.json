@@ -12,6 +12,7 @@
     "format": "prettier --write ."
   },
   "dependencies": {
+    "@iconify/react": "^6.0.2",
     "@portabletext/react": "^6.2.0",
     "@radix-ui/react-collapsible": "^1.1.20",
     "@radix-ui/react-separator": "^1.1.4",
@@ -20,6 +21,7 @@
     "@sanity/client": "^7.6.0",
     "@sanity/image-url": "^2.1.1",
     "@sanity/table": "^2.0.0",
+    "@sanity/ui": "^3.5.1",
     "@tailwindcss/typography": "^0.5.16",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

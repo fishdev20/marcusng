@@ -1,3 +1,5 @@
+import type { Technology } from "./technology";
+
 export interface Project {
   _id: string;
   title: string;
@@ -7,10 +9,7 @@ export interface Project {
     url: string;
     alt?: string;
   };
-  techStack?: {
-    name: string;
-    icon?: string;
-  }[];
+  techStack?: Technology[];
   links?: {
     github?: string;
     liveDemo?: string;

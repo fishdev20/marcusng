@@ -122,106 +122,15 @@ export const formatDate = (value: string) => {
   return formattedDate;
 };
 
-export const getDevIcon = (skill: string): string | null => {
-  const map: Record<string, string> = {
-    javascript: "javascript",
-    typescript: "typescript",
-    python: "python",
-    java: "java",
-    go: "go",
-    js: "javascript",
-    html: "html5",
-    css: "css3",
-    react: "react",
-    "react native": "react",
-    nextjs: "nextjs",
-    "next js": "nextjs",
-    redux: "redux",
-    zustand: "zustand",
-    "react query": "react",
-    ts: "typescript",
-    vue: "vuejs",
-    vuejs: "vuejs",
-    "vue js": "vuejs",
-    "tailwind css": "tailwindcss",
-    tailwindcss: "tailwindcss",
-    sass: "sass",
-    mui: "materialui",
-    "material ui": "materialui",
-    material: "materialui",
-    "material-ui": "materialui",
-    materialui: "materialui",
-    antdesign: "antdesign",
-    "ant design": "antdesign",
-    shadcn: "shadcnui",
-    "shadcn ui": "shadcnui",
-    figma: "figma",
-    photoshop: "photoshop",
-    nodejs: "nodejs",
-    "node js": "nodejs",
-    bun: "bun",
-    spring: "spring",
-    firebase: "firebase",
-    mongodb: "mongodb",
-    mongo: "mongodb",
-    postgresql: "postgresql",
-    postgres: "postgresql",
-    mysql: "mysql",
-    sqlite: "sqlite",
-    docker: "docker",
-    nginx: "nginx",
-    aws: "amazonwebservices",
-    git: "git",
-    github: "github",
-    "git hub": "github",
-    gitlab: "gitlab",
-    redis: "redis",
-    rabbitmq: "rabbitmq",
-    "rabbit mq": "rabbitmq",
-    "rabbit-mq": "rabbitmq",
-    openlayers: "openlayers",
-    "open layers": "openlayers",
-    sanity: "sanity",
-    vercel: "vercel",
-    electron: "electron",
-    prisma: "prisma",
-    rust: "rust",
-    window: "windows11",
-    k8s: "kubernetes",
-    kubernetes: "kubernetes",
-    springboot: "spring",
-    azure: "azure",
-    "microsoft azure": "azure",
-    expo: "expo",
-    laravel: "laravel",
-    "robot framework": "robotframework",
-    robotframework: "robotframework",
-    "c++": "cplusplus",
-    ".net": "dotnetcore",
-    googlecloud: "googlecloud",
-  };
+export function getIconSource(icon?: string): string | null {
+  if (!icon) return null;
+  if (/^(https?:\/\/|\/)/.test(icon)) return icon;
 
-  const normalizedSkill = skill
-    .toString()
-    .toLowerCase()
-    .trim()
-    .replace(/[._-]+/g, " ")
-    .replace(/\s+/g, " ");
+  const match = icon.match(/^([a-z0-9-]+):([a-z0-9-]+)$/i);
+  if (!match) return null;
 
-  const deviconName = map[normalizedSkill] || map[skill];
-  if (!deviconName) return null;
-
-  // List of known exceptions that need -original-wordmark.svg instead
-  const useWordmark: string[] = ["amazonwebservices"];
-
-  if (deviconName === "github") {
-    return `https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/${deviconName}/${deviconName}-plain.svg`;
-  }
-
-  const suffix = useWordmark.includes(deviconName) ? "-original-wordmark.svg" : "-original.svg";
-
-  return `https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/${deviconName}/${deviconName}${suffix}`;
-};
+  return `https://api.iconify.design/${match[1]}/${match[2]}.svg`;
+}
 
 // export function formatDate(dateString?: string): string {
 //   if (!dateString) return "";

@@ -1,9 +1,10 @@
 import { TechPill } from "@/components/tech-pill";
-import { formatStackLabel, getStackGroups } from "./helpers";
+import type { SkillGroup, Technology } from "@/types/technology";
+import { getStackGroups } from "./helpers";
 import { Section } from "./section";
 
-export function StackSection({ skills: profileSkills }: { skills?: string[] }) {
-  const stackGroups = getStackGroups(profileSkills);
+export function StackSection({ skills }: { skills?: SkillGroup[] }) {
+  const stackGroups = getStackGroups(skills);
 
   return (
     <Section id="stack" label="Stack" titlePosition="top">
@@ -22,8 +23,11 @@ export function StackSection({ skills: profileSkills }: { skills?: string[] }) {
           </div>
 
           <ul className="flex flex-wrap gap-2 px-4 py-4 sm:px-5 lg:px-6">
-            {group.items.map((skill) => (
-              <StackChip key={`${group.label}-${skill}`} skill={skill} />
+            {group.items.map((technology) => (
+              <StackChip
+                key={`${group.label}-${technology._key || technology.name}`}
+                technology={technology}
+              />
             ))}
           </ul>
         </div>
@@ -32,10 +36,10 @@ export function StackSection({ skills: profileSkills }: { skills?: string[] }) {
   );
 }
 
-function StackChip({ skill }: { skill: string }) {
+function StackChip({ technology }: { technology: Technology }) {
   return (
     <li>
-      <TechPill skill={skill} label={formatStackLabel(skill)} />
+      <TechPill technology={technology} />
     </li>
   );
 }

@@ -1,5 +1,5 @@
 import { TechPill } from "@/components/tech-pill";
-import { formatMonthYear, formatStackLabel } from "./helpers";
+import { formatMonthYear } from "./helpers";
 import { Action, Section } from "./section";
 import type { Project } from "@/types/project";
 import { Monitor } from "lucide-react";
@@ -68,11 +68,7 @@ function ProjectCard({ project }: { project: Project }) {
           <ul className="flex flex-wrap gap-2 pt-1" aria-label={`${project.title} technologies`}>
             {project.techStack.map((technology) => (
               <li key={`${project._id}-${technology.name}`}>
-                <TechPill
-                  skill={technology.name}
-                  label={formatStackLabel(technology.name)}
-                  iconSrc={technology.icon}
-                />
+                <TechPill technology={technology} />
               </li>
             ))}
           </ul>

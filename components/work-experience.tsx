@@ -10,6 +10,7 @@ import { TechPill } from "@/components/tech-pill";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
+import type { Technology } from "@/types/technology";
 import { BriefcaseBusinessIcon, InfinityIcon } from "lucide-react";
 
 export type ExperiencePositionItemType = {
@@ -34,7 +35,7 @@ export type ExperiencePositionItemType = {
   /** An icon representing the position */
   icon?: React.ReactElement;
   /** A list of skills associated with the position */
-  skills?: string[];
+  skills?: Technology[];
   /** Indicates if the position details are expanded in the UI */
   isExpanded?: boolean;
 };
@@ -267,9 +268,9 @@ export function ExperiencePositionItem({ position }: ExperiencePositionItemProps
 
         {Array.isArray(position.skills) && position.skills.length > 0 && (
           <ul className="not-prose flex max-w-[840px] flex-wrap gap-2 pt-5 pl-18 sm:pl-20">
-            {position.skills.map((skill, index) => (
-              <li key={index} className="flex">
-                <TechPill skill={skill} />
+            {position.skills.map((technology, index) => (
+              <li key={technology._key || `${technology.name}-${index}`} className="flex">
+                <TechPill technology={technology} />
               </li>
             ))}
           </ul>

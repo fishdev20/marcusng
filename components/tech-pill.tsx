@@ -1,19 +1,18 @@
-import { cn, getDevIcon } from "@/lib/utils";
+import { cn, getIconSource } from "@/lib/utils";
+import type { Technology } from "@/types/technology";
 import { PackageCheck } from "lucide-react";
 import type { ComponentProps } from "react";
 
 export function TechPill({
-  skill,
-  label = skill,
-  iconSrc,
+  technology,
+  label = technology.name,
   className,
   ...props
 }: ComponentProps<"span"> & {
-  skill: string;
+  technology: Technology;
   label?: string;
-  iconSrc?: string;
 }) {
-  const icon = iconSrc || getDevIcon(skill);
+  const icon = getIconSource(technology.icon);
 
   return (
     <span

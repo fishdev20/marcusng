@@ -156,7 +156,7 @@ function ProjectSidebar({ project }: { project: Pet }) {
           <ul className="mt-4 flex flex-wrap gap-2">
             {project.techStack.map((tech) => (
               <li key={`${project._id}-${tech.name}`}>
-                <TechPill skill={tech.name} iconSrc={tech.icon} />
+                <TechPill technology={tech} />
               </li>
             ))}
           </ul>

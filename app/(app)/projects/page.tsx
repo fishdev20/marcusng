@@ -1,7 +1,7 @@
-import { getDevIcon } from "@/lib/utils";
+import { TechPill } from "@/components/tech-pill";
 import { getAllPets } from "@/sanity/lib/query";
 import type { Pet } from "@/types/pet";
-import { ArrowUpRight, ExternalLink, Github, Monitor, PackageCheck } from "lucide-react";
+import { ArrowUpRight, ExternalLink, Github, Monitor } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { EmptyState, PageHero, PageShell, RailSection } from "../_components/site-frame";
@@ -92,7 +92,9 @@ function ProjectCard({ project }: { project: Pet }) {
         {project.techStack?.length ? (
           <ul className="flex flex-wrap gap-2">
             {project.techStack.slice(0, 7).map((tech) => (
-              <TechChip key={`${project._id}-${tech.name}`} name={tech.name} />
+              <li key={`${project._id}-${tech.name}`}>
+                <TechPill technology={tech} />
+              </li>
             ))}
           </ul>
         ) : null}
@@ -110,19 +112,6 @@ function ProjectCard({ project }: { project: Pet }) {
         </div>
       </div>
     </article>
-  );
-}
-function TechChip({ name }: { name: string }) {
-  const icon = getDevIcon(name);
-  return (
-    <li className="inline-flex h-7 items-center gap-1.5 rounded-full border bg-muted px-2.5 text-[12px] font-medium leading-none text-foreground">
-      {icon ? (
-        <Image src={icon} alt="" width={14} height={14} className="h-3.5 w-3.5 object-contain" />
-      ) : (
-        <PackageCheck className="h-3.5 w-3.5 text-muted-foreground" />
-      )}
-      {name}
-    </li>
   );
 }
 function ProjectAction({

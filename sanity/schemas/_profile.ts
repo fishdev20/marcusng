@@ -113,13 +113,6 @@ const profile = {
       },
     },
     {
-      name: "skills",
-      title: "Skills",
-      type: "array",
-      description: "Add a list of skills",
-      of: [{ type: "string" }],
-    },
-    {
       name: "education",
       title: "Education",
       type: "array",

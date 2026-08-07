@@ -4,6 +4,7 @@ import { Pet } from "@/types/pet";
 import { Profile } from "@/types/profile";
 import type { Project } from "@/types/project";
 import type { Testimonial } from "@/types/testimonial";
+import type { SkillGroup } from "@/types/technology";
 import { groq } from "next-sanity";
 
 const SANITY_REVALIDATE_SECONDS = 60;
@@ -67,7 +68,6 @@ export async function getProfile(): Promise<Profile> {
       email,
       "resumeURL": resumeURL.asset->url,
       socialLinks,
-      skills,
       education[]{
         school,
         "logo": {
@@ -79,6 +79,21 @@ export async function getProfile(): Promise<Profile> {
         years,
         location,
         details
+      }
+    }`,
+  );
+}
+
+export async function getSkills(): Promise<SkillGroup[]> {
+  return sanityFetch(
+    groq`*[_type == "skill"] | order(coalesce(order, 0) asc, name asc) {
+      _id,
+      name,
+      order,
+      items[]{
+        _key,
+        name,
+        icon
       }
     }`,
   );

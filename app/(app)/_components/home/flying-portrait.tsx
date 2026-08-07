@@ -10,6 +10,7 @@ import {
 } from "motion/react";
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 type FlightMetrics = {
   originX: number;
@@ -37,6 +38,7 @@ export function FlyingPortrait({ src, alt }: { src: string; alt: string }) {
   const metricsRef = useRef<FlightMetrics | null>(null);
   const isSettledRef = useRef(false);
   const [ready, setReady] = useState(false);
+  const [portalRoot, setPortalRoot] = useState<HTMLElement | null>(null);
   const reduceMotion = useReducedMotion();
   const { scrollY } = useScroll();
   const rawProgress = useMotionValue(0);
@@ -52,6 +54,10 @@ export function FlyingPortrait({ src, alt }: { src: string; alt: string }) {
   const width = useMotionValue(0);
   const height = useMotionValue(0);
   const opacity = useMotionValue(0);
+
+  useEffect(() => {
+    setPortalRoot(document.body);
+  }, []);
 
   const renderPosition = useCallback(
     (progress: number, currentScroll: number) => {
@@ -176,21 +182,35 @@ export function FlyingPortrait({ src, alt }: { src: string; alt: string }) {
         priority
       />
 
-      <motion.span
-        data-flying-portrait
-        className="pointer-events-none fixed left-0 top-0 z-20 block overflow-hidden rounded-sm border bg-muted"
-        style={{ x, y, width, height, opacity, willChange: "transform, width, height" }}
-        aria-hidden="true"
-      >
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          priority
-          className="object-cover"
-          sizes="(max-width: 640px) calc(100vw - 32px), 176px"
-        />
-      </motion.span>
+      {portalRoot
+        ? createPortal(
+            <motion.span
+              data-flying-portrait
+              className="pointer-events-none fixed left-0 top-0 z-20 block overflow-hidden rounded-sm border bg-muted"
+              style={{
+                x,
+                y,
+                width,
+                height,
+                opacity,
+                willChange: "transform, width, height",
+                backfaceVisibility: "hidden",
+                WebkitBackfaceVisibility: "hidden",
+              }}
+              aria-hidden="true"
+            >
+              <Image
+                src={src}
+                alt={alt}
+                fill
+                priority
+                className="object-cover"
+                sizes="(max-width: 640px) calc(100vw - 32px), 176px"
+              />
+            </motion.span>,
+            portalRoot,
+          )
+        : null}
     </span>
   );
 }

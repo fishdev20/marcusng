@@ -84,27 +84,7 @@ const pet = {
       name: "techStack",
       title: "Tech Stack",
       type: "array",
-      of: [
-        defineField({
-          name: "tech",
-          title: "Technology",
-          type: "object",
-          fields: [
-            {
-              name: "name",
-              title: "Name",
-              type: "string",
-              validation: (Rule) => Rule.required(),
-            },
-            {
-              name: "icon",
-              title: "Icon URL",
-              type: "url",
-              description: "Optional: add a logo/icon link for display.",
-            },
-          ],
-        }),
-      ],
+      of: [{ type: "tech" }],
       description: "Technologies, tools, or frameworks used in this project.",
     },
     defineField({

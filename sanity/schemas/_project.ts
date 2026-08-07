@@ -49,34 +49,7 @@ const project = {
       title: "Technologies Used",
       type: "array",
       description: "Add the tools, libraries, and technologies used in this project.",
-      of: [
-        defineField({
-          name: "tech",
-          title: "Tech",
-          type: "object",
-          fields: [
-            {
-              name: "name",
-              title: "Name",
-              type: "string",
-              validation: (rule) => rule.required(),
-            },
-            {
-              name: "icon",
-              title: "Icon (Optional)",
-              type: "url",
-              description: "Link of icon display in UI.",
-            },
-          ],
-          preview: {
-            select: {
-              title: "name",
-              subtitle: "icon",
-              image: "url",
-            },
-          },
-        }),
-      ],
+      of: [{ type: "tech" }],
     }),
     defineField({
       name: "links",
