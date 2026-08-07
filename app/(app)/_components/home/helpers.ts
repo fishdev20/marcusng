@@ -1,11 +1,13 @@
 import type { ExperienceItemType, ExperiencePositionItemType } from "@/components/work-experience";
 import { skills } from "@/constants/skill";
+import { fallbackTestimonials } from "@/constants/testimonial";
 import { getLatestBlogs } from "@/lib/blog";
-import { getExperiences, getProfile, getProjects } from "@/sanity/lib/query";
+import { getExperiences, getProfile, getProjects, getTestimonials } from "@/sanity/lib/query";
 import type { IBlogCard } from "@/types/blog";
 import type { Experience, ExperiencePosition } from "@/types/experience";
 import type { Profile } from "@/types/profile";
 import type { Project } from "@/types/project";
+import type { Testimonial } from "@/types/testimonial";
 
 export const stackGroupConfig = [
   { label: "Language", items: [...skills.languages, "python"] },
@@ -321,11 +323,12 @@ export function toWorkExperienceItems(experiences: Experience[]): ExperienceItem
 }
 
 export async function loadPortfolioData() {
-  const [profile, experiences, projects, posts] = await Promise.all([
+  const [profile, experiences, projects, posts, sanityTestimonials] = await Promise.all([
     getProfile().catch(() => null) as Promise<Profile | null>,
     getExperiences().catch(() => []) as Promise<Experience[]>,
     getProjects().catch(() => []) as Promise<Project[]>,
     getLatestBlogs(3).catch(() => []) as Promise<IBlogCard[]>,
+    getTestimonials().catch(() => []) as Promise<Testimonial[]>,
   ]);
 
   return {
@@ -333,5 +336,6 @@ export async function loadPortfolioData() {
     experiences,
     projects: sortProjects(projects),
     posts,
+    testimonials: sanityTestimonials.length ? sanityTestimonials : fallbackTestimonials,
   };
 }

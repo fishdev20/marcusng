@@ -3,6 +3,7 @@ import { Experience } from "@/types/experience";
 import { Pet } from "@/types/pet";
 import { Profile } from "@/types/profile";
 import type { Project } from "@/types/project";
+import type { Testimonial } from "@/types/testimonial";
 import { groq } from "next-sanity";
 
 const SANITY_REVALIDATE_SECONDS = 60;
@@ -102,6 +103,27 @@ export async function getProjects(): Promise<Project[]> {
       tags,
       date,
       _createdAt
+    }`,
+  );
+}
+
+export async function getTestimonials(): Promise<Testimonial[]> {
+  return sanityFetch(
+    groq`*[_type == "testimonial" && featured != false] | order(coalesce(order, 999) asc, recommendationDate desc) {
+      _id,
+      name,
+      role,
+      company,
+      quote,
+      excerpt,
+      recommendationDate,
+      linkedinUrl,
+      featured,
+      order,
+      "avatar": {
+        "url": avatar.asset->url,
+        "alt": avatar.alt
+      }
     }`,
   );
 }
