@@ -8,7 +8,6 @@ import type { ChevronsUpDownIconHandle } from "@/components/chevrons-up-down-ico
 import { ChevronsUpDownIcon } from "@/components/chevrons-up-down-icon";
 import { TechPill } from "@/components/tech-pill";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import type { Technology } from "@/types/technology";
 import { BriefcaseBusinessIcon, InfinityIcon } from "lucide-react";
@@ -223,10 +222,7 @@ export function ExperiencePositionItem({ position }: ExperiencePositionItemProps
                   <dd>{position.employmentType}</dd>
                 </div>
 
-                <Separator
-                  className="data-vertical:h-3.5 data-vertical:w-px data-vertical:self-center data-vertical:bg-border"
-                  orientation="vertical"
-                />
+                <span aria-hidden className="h-3.5 w-px shrink-0 self-center bg-border" />
               </>
             )}
 
@@ -245,10 +241,7 @@ export function ExperiencePositionItem({ position }: ExperiencePositionItemProps
 
             {duration && (
               <>
-                <Separator
-                  className="data-vertical:h-3.5 data-vertical:w-px data-vertical:self-center data-vertical:bg-border"
-                  orientation="vertical"
-                />
+                <span aria-hidden className="h-3.5 w-px shrink-0 self-center bg-border" />
                 <div>
                   <dt className="sr-only">Duration</dt>
                   <dd className="tabular-nums">{duration}</dd>
