@@ -71,7 +71,8 @@
   --tracking-normal: 0rem;
   --spacing: 0.25rem;
   --fade-bottom-height: 4rem;
-  --project-transition-ease: cubic-bezier(0.65, 0, 0.35, 1);
+  --media-transition-duration: 600ms;
+  --media-transition-ease: cubic-bezier(0.65, 0, 0.35, 1);
   --expo-out: linear(
     0 0%,
     0.1684 2.66%,
@@ -226,8 +227,8 @@ html.theme-transition::view-transition-new(root) {
 }
 
 html.media-page-transition::view-transition-group(*) {
-  animation-duration: 780ms;
-  animation-timing-function: var(--project-transition-ease);
+  animation-duration: var(--media-transition-duration);
+  animation-timing-function: var(--media-transition-ease);
 }
 
 html.media-page-transition::view-transition-image-pair(*) {
@@ -257,12 +258,12 @@ html.media-page-transition::view-transition-new(.media-image) {
 
 html.media-page-transition::view-transition-old(root) {
   animation:
-    780ms var(--project-transition-ease) both project-page-background-blur,
-    280ms 780ms var(--expo-out) both project-page-fade-out;
+    var(--media-transition-duration) var(--media-transition-ease) both media-page-background-blur,
+    240ms var(--media-transition-duration) var(--expo-out) both media-page-fade-out;
 }
 
 html.media-page-transition::view-transition-new(root) {
-  animation: 380ms 780ms var(--expo-out) both project-page-fade-in;
+  animation: 320ms var(--media-transition-duration) var(--expo-out) both media-page-fade-in;
 }
 
 html.media-page-transition [data-media-transition-source] img {
@@ -270,13 +271,13 @@ html.media-page-transition [data-media-transition-source] img {
   transition: none !important;
 }
 
-@keyframes project-page-fade-out {
+@keyframes media-page-fade-out {
   to {
     opacity: 0;
   }
 }
 
-@keyframes project-page-background-blur {
+@keyframes media-page-background-blur {
   0%,
   12% {
     filter: blur(0);
@@ -289,7 +290,7 @@ html.media-page-transition [data-media-transition-source] img {
   }
 }
 
-@keyframes project-page-fade-in {
+@keyframes media-page-fade-in {
   from {
     opacity: 0;
   }
