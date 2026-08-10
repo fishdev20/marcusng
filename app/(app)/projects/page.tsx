@@ -1,4 +1,6 @@
 import { TechPill } from "@/components/tech-pill";
+import { MediaTransitionLink } from "@/components/media-transition-link";
+import { getMediaTransitionName } from "@/lib/media-transition";
 import { getAllPets } from "@/sanity/lib/query";
 import type { Pet } from "@/types/pet";
 import { ArrowUpRight, ExternalLink, Github, Monitor } from "lucide-react";
@@ -47,26 +49,39 @@ export default async function ProjectsPage() {
   );
 }
 function ProjectCard({ project }: { project: Pet }) {
+  const href = getProjectHref(project);
+  const transitionName = getMediaTransitionName("project", project.slug);
+
   return (
     <article className="space-y-3">
-      <Link
-        href={getProjectHref(project)}
+      <MediaTransitionLink
+        href={href}
+        transitionName={transitionName}
         className="group block overflow-hidden rounded-sm border bg-muted"
       >
         {project.coverImage?.url ? (
-          <Image
-            src={project.coverImage.url}
-            alt={project.coverImage.alt || project.name}
-            width={560}
-            height={380}
-            className="aspect-[1.22/1] w-full object-cover transition duration-500 group-hover:scale-[1.025]"
-          />
+          <div
+            className="aspect-[1.22/1] w-full overflow-hidden"
+            data-media-transition-source={transitionName}
+            style={{
+              viewTransitionName: transitionName,
+              viewTransitionClass: "media-image",
+            }}
+          >
+            <Image
+              src={project.coverImage.url}
+              alt={project.coverImage.alt || project.name}
+              width={560}
+              height={380}
+              className="size-full object-cover transition duration-500 group-hover:scale-[1.025]"
+            />
+          </div>
         ) : (
           <div className="grid aspect-[1.22/1] place-items-center p-5 text-center font-incognito text-[24px] font-semibold leading-none text-muted-foreground">
             {project.name}
           </div>
         )}
-      </Link>
+      </MediaTransitionLink>
       <div className="space-y-3">
         <div className="flex items-center justify-between gap-4 font-mono text-[11px] text-muted-foreground">
           <span>{getCategoryLabel(project.category).toUpperCase()}</span>
@@ -81,13 +96,14 @@ function ProjectCard({ project }: { project: Pet }) {
               {project.shortDescription || "No description provided."}
             </p>
           </div>
-          <Link
-            href={getProjectHref(project)}
+          <MediaTransitionLink
+            href={href}
+            transitionName={transitionName}
             aria-label={`View ${project.name}`}
             className="mt-0.5 shrink-0 text-muted-foreground transition-colors hover:text-foreground"
           >
             <ArrowUpRight className="h-4 w-4" strokeWidth={1.8} />
-          </Link>
+          </MediaTransitionLink>
         </div>
         {project.techStack?.length ? (
           <ul className="flex flex-wrap gap-2">

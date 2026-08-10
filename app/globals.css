@@ -71,6 +71,7 @@
   --tracking-normal: 0rem;
   --spacing: 0.25rem;
   --fade-bottom-height: 4rem;
+  --project-transition-ease: cubic-bezier(0.65, 0, 0.35, 1);
   --expo-out: linear(
     0 0%,
     0.1684 2.66%,
@@ -222,6 +223,76 @@ html.theme-transition::view-transition-old(root) {
 html.theme-transition::view-transition-new(root) {
   z-index: 2;
   animation: 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards theme-blur-in;
+}
+
+html.media-page-transition::view-transition-group(*) {
+  animation-duration: 780ms;
+  animation-timing-function: var(--project-transition-ease);
+}
+
+html.media-page-transition::view-transition-image-pair(*) {
+  isolation: auto;
+}
+
+html.media-page-transition::view-transition-old(*),
+html.media-page-transition::view-transition-new(*) {
+  mix-blend-mode: normal;
+}
+
+html.media-page-transition::view-transition-old(.media-image),
+html.media-page-transition::view-transition-new(.media-image) {
+  animation: none;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+html.media-page-transition::view-transition-old(.media-image) {
+  opacity: 0;
+}
+
+html.media-page-transition::view-transition-new(.media-image) {
+  opacity: 1;
+}
+
+html.media-page-transition::view-transition-old(root) {
+  animation:
+    780ms var(--project-transition-ease) both project-page-background-blur,
+    280ms 780ms var(--expo-out) both project-page-fade-out;
+}
+
+html.media-page-transition::view-transition-new(root) {
+  animation: 380ms 780ms var(--expo-out) both project-page-fade-in;
+}
+
+html.media-page-transition [data-media-transition-source] img {
+  transform: none !important;
+  transition: none !important;
+}
+
+@keyframes project-page-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes project-page-background-blur {
+  0%,
+  12% {
+    filter: blur(0);
+    transform: scale(1);
+  }
+
+  to {
+    filter: blur(6px);
+    transform: scale(1.008);
+  }
+}
+
+@keyframes project-page-fade-in {
+  from {
+    opacity: 0;
+  }
 }
 
 @layer utilities {

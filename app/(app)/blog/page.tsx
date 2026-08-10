@@ -1,9 +1,10 @@
+import { MediaTransitionLink } from "@/components/media-transition-link";
 import { getBlogs } from "@/lib/blog";
+import { getMediaTransitionName } from "@/lib/media-transition";
 import { urlForBlogImage } from "@/sanity/blog-image";
 import type { IBlogCard } from "@/types/blog";
 import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import { EmptyState, PageHero, PageShell, RailSection } from "../_components/site-frame";
 export const revalidate = 30;
 export const metadata = {
@@ -42,9 +43,12 @@ export default async function BlogPage() {
 function BlogRow({ post }: { post: IBlogCard }) {
   const date = formatPostDate(post.date);
   const category = post.categories?.[0]?.title;
+  const transitionName = getMediaTransitionName("blog", post.slug);
+
   return (
-    <Link
+    <MediaTransitionLink
       href={`/blog/${post.slug}`}
+      transitionName={transitionName}
       className="group grid gap-4 border-b py-5 last:border-b-0 sm:grid-cols-[96px_minmax(0,1fr)_116px_16px] sm:items-center"
     >
       <div className="flex flex-wrap gap-x-3 gap-y-1 font-mono text-[10px] uppercase tracking-[0.08em] text-muted-foreground sm:grid sm:gap-2">
@@ -60,7 +64,18 @@ function BlogRow({ post }: { post: IBlogCard }) {
           </p>
         ) : null}
       </div>
-      <div className="relative aspect-[1.35/1] overflow-hidden rounded-sm border bg-muted">
+      <div
+        className="relative aspect-[1.35/1] overflow-hidden rounded-sm border bg-muted"
+        data-media-transition-source={post.mainImage ? transitionName : undefined}
+        style={
+          post.mainImage
+            ? {
+                viewTransitionName: transitionName,
+                viewTransitionClass: "media-image",
+              }
+            : undefined
+        }
+      >
         {post.mainImage ? (
           <Image
             src={urlForBlogImage(post.mainImage)}
@@ -79,6 +94,6 @@ function BlogRow({ post }: { post: IBlogCard }) {
         className="hidden h-4 w-4 text-muted-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-foreground sm:block"
         strokeWidth={1.8}
       />
-    </Link>
+    </MediaTransitionLink>
   );
 }

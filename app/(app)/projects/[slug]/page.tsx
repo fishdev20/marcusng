@@ -1,5 +1,6 @@
 import { PortableBlock } from "@/components/portable-text";
 import { TechPill } from "@/components/tech-pill";
+import { getMediaTransitionName } from "@/lib/media-transition";
 import { getAllPets, getPetBySlug } from "@/sanity/lib/query";
 import type { Pet } from "@/types/pet";
 import { ArrowUpRight, ExternalLink, Github } from "lucide-react";
@@ -106,10 +107,19 @@ export default async function ProjectDetails({ params }: { params: Params }) {
 }
 
 function ProjectMedia({ project }: { project: Pet }) {
+  const transitionName = getMediaTransitionName("project", project.slug);
+
   return (
     <DetailMedia>
       {project.coverImage?.url ? (
-        <div className="relative aspect-[16/10] w-full overflow-hidden sm:aspect-[16/9]">
+        <div
+          className="relative aspect-[16/10] w-full overflow-hidden sm:aspect-[16/9]"
+          data-media-transition-target={transitionName}
+          style={{
+            viewTransitionName: transitionName,
+            viewTransitionClass: "media-image",
+          }}
+        >
           <Image
             src={project.coverImage.url}
             alt={project.coverImage.alt || project.name}

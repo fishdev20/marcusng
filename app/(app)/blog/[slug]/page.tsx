@@ -2,6 +2,7 @@ import CodeBlock from "@/app/components/blog/CodeBlock";
 import ReadingProgress from "@/app/components/blog/ReadingProgress";
 import { getBlogBySlug, getBlogSlugs } from "@/lib/blog";
 import { highlightCode } from "@/lib/code-highlight";
+import { getMediaTransitionName } from "@/lib/media-transition";
 import { formatDate, slugify } from "@/lib/utils";
 import { urlForBlogImage } from "@/sanity/blog-image";
 import { IBlogArticle, IBlogHeading } from "@/types/blog";
@@ -153,6 +154,7 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ sl
 
   const headings = article.headings?.filter((heading) => getHeadingText(heading)) || [];
   const coverImageUrl = article.mainImage ? urlForBlogImage(article.mainImage) : null;
+  const transitionName = getMediaTransitionName("blog", article.slug);
   const categoryLabel =
     article.categories?.map((category) => category.title).join(", ") || "Article";
 
@@ -169,7 +171,14 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ sl
 
         {coverImageUrl ? (
           <DetailMedia>
-            <div className="relative aspect-[16/10] sm:aspect-[16/9]">
+            <div
+              className="relative aspect-[16/10] sm:aspect-[16/9]"
+              data-media-transition-target={transitionName}
+              style={{
+                viewTransitionName: transitionName,
+                viewTransitionClass: "media-image",
+              }}
+            >
               <Image
                 src={coverImageUrl}
                 alt={article.title}
