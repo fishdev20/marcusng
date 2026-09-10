@@ -14,6 +14,13 @@ const pet = {
       type: "string",
       description: "Enter the name of the project",
     },
+    defineField({
+      name: "currentlyBuilding",
+      title: "Currently Building",
+      type: "boolean",
+      initialValue: false,
+      description: "Feature this active project on the homepage instead of the project archive.",
+    }),
     {
       name: "slug",
       title: "Slug",

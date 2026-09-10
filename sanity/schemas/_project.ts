@@ -1,9 +1,9 @@
 // schemas/project.ts
 
 import { FolderGit2 } from "lucide-react";
-import { defineField } from "sanity";
+import { defineField, defineType } from "sanity";
 
-const project = {
+const project = defineType({
   name: "project",
   title: "Projects",
   type: "document",
@@ -21,6 +21,13 @@ const project = {
       type: "boolean",
       initialValue: false,
       description: "Mark this project as featured to highlight it on the homepage.",
+    }),
+    defineField({
+      name: "currentlyBuilding",
+      title: "Currently Building",
+      type: "boolean",
+      initialValue: false,
+      description: "Mark an active project to feature its in-progress status in project listings.",
     }),
     defineField({
       name: "description",
@@ -96,10 +103,18 @@ const project = {
   preview: {
     select: {
       title: "title",
-      subtitle: "description",
+      description: "description",
+      currentlyBuilding: "currentlyBuilding",
       media: "thumbnail",
     },
+    prepare({ title, description, currentlyBuilding, media }) {
+      return {
+        title,
+        subtitle: currentlyBuilding ? `Currently building · ${description}` : description,
+        media,
+      };
+    },
   },
-};
+});
 
 export default project;

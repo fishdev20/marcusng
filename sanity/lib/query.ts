@@ -101,10 +101,11 @@ export async function getSkills(): Promise<SkillGroup[]> {
 
 export async function getProjects(): Promise<Project[]> {
   return sanityFetch(
-    groq`*[_type == "project"] | order(_createdAt asc) {
+    groq`*[_type == "project"] | order(coalesce(currentlyBuilding, false) desc, _createdAt asc) {
       _id,
       title,
       featured,
+      currentlyBuilding,
       description,
       "thumbnail": {
         "url": thumbnail.asset->url,
@@ -118,6 +119,32 @@ export async function getProjects(): Promise<Project[]> {
       tags,
       date,
       _createdAt
+    }`,
+  );
+}
+
+export async function getCurrentlyBuildingProjects(): Promise<Project[]> {
+  return sanityFetch(
+    groq`*[_type == "pet" && currentlyBuilding == true] | order(_updatedAt desc) {
+      _id,
+      "title": name,
+      "featured": true,
+      currentlyBuilding,
+      "description": shortDescription,
+      "thumbnail": {
+        "url": coverImage.asset->url,
+        "alt": coverImage.alt
+      },
+      techStack[]{
+        name,
+        icon
+      },
+      "links": {
+        "github": repository,
+        "liveDemo": projectUrl
+      },
+      "tags": [category],
+      "date": _updatedAt
     }`,
   );
 }
@@ -145,9 +172,10 @@ export async function getTestimonials(): Promise<Testimonial[]> {
 
 export async function getAllPets(): Promise<Pet[]> {
   return sanityFetch(
-    groq`*[_type == "pet"] | order(_createdAt desc) {
+    groq`*[_type == "pet"] | order(coalesce(currentlyBuilding, false) desc, _createdAt desc) {
       _id,
       name,
+      currentlyBuilding,
       "slug": slug.current,
       shortDescription,
       logo {
@@ -175,6 +203,7 @@ export async function getPetBySlug(slug: string): Promise<Pet | null> {
     groq`*[_type == "pet" && slug.current == $slug][0]{
       _id,
       name,
+      currentlyBuilding,
       "slug": slug.current,
       shortDescription,
       "logo": {

@@ -1,3 +1,4 @@
+import { CurrentProjectFeature } from "@/components/current-project-feature";
 import { TechPill } from "@/components/tech-pill";
 import { formatMonthYear } from "./helpers";
 import { Action, Section } from "./section";
@@ -33,6 +34,25 @@ function ProjectCard({ project }: { project: Project }) {
   const href = project.links?.liveDemo || project.links?.github || "/projects";
   const external = Boolean(project.links?.liveDemo || project.links?.github);
   const projectType = project.tags?.[0] || (project.links?.liveDemo ? "Website" : "Project");
+
+  if (project.currentlyBuilding) {
+    return (
+      <CurrentProjectFeature
+        id={project._id}
+        title={project.title}
+        description={project.description}
+        imageUrl={project.thumbnail?.url}
+        imageAlt={project.thumbnail?.alt}
+        href={href}
+        external={external}
+        primaryLabel="Open project"
+        category={projectType}
+        meta={formatMonthYear(project.date) || "Active project"}
+        technologies={project.techStack}
+      />
+    );
+  }
+
   return (
     <article className="space-y-3">
       <Link

@@ -1,3 +1,4 @@
+import { CurrentProjectFeature } from "@/components/current-project-feature";
 import { TechPill } from "@/components/tech-pill";
 import { MediaTransitionLink } from "@/components/media-transition-link";
 import { getMediaTransitionName } from "@/lib/media-transition";
@@ -27,6 +28,9 @@ function getCategoryLabel(category?: Pet["category"]) {
 }
 export default async function ProjectsPage() {
   const projects: Pet[] = await getAllPets().catch(() => []);
+  const currentProjects = projects.filter((project) => project.currentlyBuilding);
+  const archivedProjects = projects.filter((project) => !project.currentlyBuilding);
+
   return (
     <PageShell>
       <PageHero
@@ -34,10 +38,19 @@ export default async function ProjectsPage() {
         title="Product work, experiments, and shipped builds."
         description="A broader archive of web, mobile, desktop, and product-focused work, organized for scanning instead of spectacle."
       />
+      {currentProjects.length ? (
+        <RailSection label="In progress">
+          <div className="grid gap-y-9 sm:grid-cols-2">
+            {currentProjects.map((project) => (
+              <CurrentProjectCard key={project._id} project={project} />
+            ))}
+          </div>
+        </RailSection>
+      ) : null}
       <RailSection label="Archive" className="pb-14">
-        {projects.length ? (
+        {archivedProjects.length ? (
           <div className="grid gap-x-6 gap-y-9 sm:grid-cols-2">
-            {projects.map((project) => (
+            {archivedProjects.map((project) => (
               <ProjectCard key={project._id} project={project} />
             ))}
           </div>
@@ -130,6 +143,32 @@ function ProjectCard({ project }: { project: Pet }) {
     </article>
   );
 }
+
+function CurrentProjectCard({ project }: { project: Pet }) {
+  const href = getProjectHref(project);
+  const transitionName = getMediaTransitionName("project", project.slug);
+
+  return (
+    <CurrentProjectFeature
+      id={project._id}
+      title={project.name}
+      description={project.shortDescription || "A detailed project description is coming soon."}
+      imageUrl={project.coverImage?.url}
+      imageAlt={project.coverImage?.alt}
+      href={href}
+      primaryLabel="View project"
+      category={getCategoryLabel(project.category)}
+      technologies={project.techStack}
+      transitionName={transitionName}
+      headingAs="h2"
+      secondaryLinks={[
+        ...(project.projectUrl ? [{ href: project.projectUrl, label: "Live demo" }] : []),
+        ...(project.repository ? [{ href: project.repository, label: "Repository" }] : []),
+      ]}
+    />
+  );
+}
+
 function ProjectAction({
   href,
   icon: Icon,

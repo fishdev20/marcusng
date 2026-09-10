@@ -4,6 +4,7 @@ export interface Project {
   _id: string;
   title: string;
   featured: boolean;
+  currentlyBuilding?: boolean;
   description: string;
   thumbnail?: {
     url: string;

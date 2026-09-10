@@ -6,6 +6,7 @@ export interface Pet {
   _id: string;
   name: string;
   slug: string;
+  currentlyBuilding?: boolean;
   shortDescription?: string;
   logo?: {
     url?: string;

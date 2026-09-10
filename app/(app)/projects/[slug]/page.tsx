@@ -32,6 +32,7 @@ function getCategoryLabel(category?: string) {
 }
 
 function getAvailability(project: Pet) {
+  if (project.currentlyBuilding) return "Currently building";
   if (project.projectUrl) return "Public build";
   if (project.repository) return "Source available";
   return "Private work";

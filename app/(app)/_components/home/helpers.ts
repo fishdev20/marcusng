@@ -2,6 +2,7 @@ import type { ExperienceItemType, ExperiencePositionItemType } from "@/component
 import { fallbackTestimonials } from "@/constants/testimonial";
 import { getLatestBlogs } from "@/lib/blog";
 import {
+  getCurrentlyBuildingProjects,
   getExperiences,
   getProfile,
   getProjects,
@@ -83,6 +84,10 @@ export function portableTextToParagraphs(value?: Profile["fullBio"]) {
 
 export function sortProjects(projects: Project[]) {
   return [...projects].sort((a, b) => {
+    if (a.currentlyBuilding !== b.currentlyBuilding) {
+      return Number(Boolean(b.currentlyBuilding)) - Number(Boolean(a.currentlyBuilding));
+    }
+
     if (a.featured === b.featured) {
       return Number(new Date(b.date || 0)) - Number(new Date(a.date || 0));
     }
@@ -176,20 +181,22 @@ export function toWorkExperienceItems(experiences: Experience[]): ExperienceItem
 }
 
 export async function loadPortfolioData() {
-  const [profile, experiences, skills, projects, posts, sanityTestimonials] = await Promise.all([
-    getProfile().catch(() => null) as Promise<Profile | null>,
-    getExperiences().catch(() => []) as Promise<Experience[]>,
-    getSkills().catch(() => []) as Promise<SkillGroup[]>,
-    getProjects().catch(() => []) as Promise<Project[]>,
-    getLatestBlogs(3).catch(() => []) as Promise<IBlogCard[]>,
-    getTestimonials().catch(() => []) as Promise<Testimonial[]>,
-  ]);
+  const [profile, experiences, skills, projects, currentProjects, posts, sanityTestimonials] =
+    await Promise.all([
+      getProfile().catch(() => null) as Promise<Profile | null>,
+      getExperiences().catch(() => []) as Promise<Experience[]>,
+      getSkills().catch(() => []) as Promise<SkillGroup[]>,
+      getProjects().catch(() => []) as Promise<Project[]>,
+      getCurrentlyBuildingProjects().catch(() => []) as Promise<Project[]>,
+      getLatestBlogs(3).catch(() => []) as Promise<IBlogCard[]>,
+      getTestimonials().catch(() => []) as Promise<Testimonial[]>,
+    ]);
 
   return {
     profile,
     experiences,
     skills,
-    projects: sortProjects(projects),
+    projects: sortProjects([...currentProjects, ...projects]),
     posts,
     testimonials: sanityTestimonials.length ? sanityTestimonials : fallbackTestimonials,
   };
