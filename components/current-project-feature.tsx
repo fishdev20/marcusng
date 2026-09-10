@@ -71,7 +71,7 @@ export function CurrentProjectFeature({
   return (
     <article className="sm:col-span-2">
       <div className="grid lg:grid-cols-[minmax(0,1.25fr)_minmax(260px,0.75fr)]">
-        <div className="p-3 sm:p-4">
+        <div>
           {transitionName ? (
             <MediaTransitionLink
               href={href}
