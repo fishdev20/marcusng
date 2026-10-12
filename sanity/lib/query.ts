@@ -1,4 +1,5 @@
 import { client } from "@/lib/sanity";
+import type { Certificate } from "@/types/certificate";
 import { Experience } from "@/types/experience";
 import { Pet } from "@/types/pet";
 import { Profile } from "@/types/profile";
@@ -165,6 +166,27 @@ export async function getTestimonials(): Promise<Testimonial[]> {
       "avatar": {
         "url": avatar.asset->url,
         "alt": avatar.alt
+      }
+    }`,
+  );
+}
+
+export async function getCertificates(): Promise<Certificate[]> {
+  return sanityFetch(
+    groq`*[_type == "certificate" && featured != false] | order(coalesce(order, 999) asc, issueDate desc) {
+      _id,
+      title,
+      issuer,
+      issueDate,
+      expirationDate,
+      credentialId,
+      credentialUrl,
+      description,
+      featured,
+      order,
+      "issuerLogo": {
+        "url": issuerLogo.asset->url,
+        "alt": issuerLogo.alt
       }
     }`,
   );

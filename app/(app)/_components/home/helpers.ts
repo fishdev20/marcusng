@@ -2,6 +2,7 @@ import type { ExperienceItemType, ExperiencePositionItemType } from "@/component
 import { fallbackTestimonials } from "@/constants/testimonial";
 import { getLatestBlogs } from "@/lib/blog";
 import {
+  getCertificates,
   getCurrentlyBuildingProjects,
   getExperiences,
   getProfile,
@@ -10,6 +11,7 @@ import {
   getTestimonials,
 } from "@/sanity/lib/query";
 import type { IBlogCard } from "@/types/blog";
+import type { Certificate } from "@/types/certificate";
 import type { Experience, ExperiencePosition } from "@/types/experience";
 import type { Profile } from "@/types/profile";
 import type { Project } from "@/types/project";
@@ -181,21 +183,31 @@ export function toWorkExperienceItems(experiences: Experience[]): ExperienceItem
 }
 
 export async function loadPortfolioData() {
-  const [profile, experiences, skills, projects, currentProjects, posts, sanityTestimonials] =
-    await Promise.all([
-      getProfile().catch(() => null) as Promise<Profile | null>,
-      getExperiences().catch(() => []) as Promise<Experience[]>,
-      getSkills().catch(() => []) as Promise<SkillGroup[]>,
-      getProjects().catch(() => []) as Promise<Project[]>,
-      getCurrentlyBuildingProjects().catch(() => []) as Promise<Project[]>,
-      getLatestBlogs(3).catch(() => []) as Promise<IBlogCard[]>,
-      getTestimonials().catch(() => []) as Promise<Testimonial[]>,
-    ]);
+  const [
+    profile,
+    experiences,
+    skills,
+    certificates,
+    projects,
+    currentProjects,
+    posts,
+    sanityTestimonials,
+  ] = await Promise.all([
+    getProfile().catch(() => null) as Promise<Profile | null>,
+    getExperiences().catch(() => []) as Promise<Experience[]>,
+    getSkills().catch(() => []) as Promise<SkillGroup[]>,
+    getCertificates().catch(() => []) as Promise<Certificate[]>,
+    getProjects().catch(() => []) as Promise<Project[]>,
+    getCurrentlyBuildingProjects().catch(() => []) as Promise<Project[]>,
+    getLatestBlogs(3).catch(() => []) as Promise<IBlogCard[]>,
+    getTestimonials().catch(() => []) as Promise<Testimonial[]>,
+  ]);
 
   return {
     profile,
     experiences,
     skills,
+    certificates,
     projects: sortProjects([...currentProjects, ...projects]),
     posts,
     testimonials: sanityTestimonials.length ? sanityTestimonials : fallbackTestimonials,

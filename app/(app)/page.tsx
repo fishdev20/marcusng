@@ -1,5 +1,6 @@
 import { AboutSection } from "./_components/home/about-section";
 import { BlogSection } from "./_components/home/blog-section";
+import { CertificatesSection } from "./_components/home/certificates-section";
 import { ContactSection } from "./_components/home/contact-section";
 import { ExperienceSection } from "./_components/home/experience-section";
 import { loadPortfolioData } from "./_components/home/helpers";
@@ -13,7 +14,8 @@ export const metadata = {
   description: "Marcus Nguyen's portfolio showcasing his software engineering work.",
 };
 export default async function HomePage() {
-  const { profile, experiences, skills, projects, posts, testimonials } = await loadPortfolioData();
+  const { profile, experiences, skills, certificates, projects, posts, testimonials } =
+    await loadPortfolioData();
   return (
     <main className="min-h-dvh bg-background text-foreground">
       <div className="mx-auto min-h-dvh w-full max-w-310 bg-background px-3 sm:px-5 lg:px-8">
@@ -21,7 +23,9 @@ export default async function HomePage() {
           <HeroSection profile={profile} /> <TrustedBySection experiences={experiences} />
           <AboutSection profile={profile} />
           <StackSection skills={skills} />
-          <ExperienceSection experiences={experiences} /> <ProjectsSection projects={projects} />
+          <ExperienceSection experiences={experiences} />
+          <CertificatesSection certificates={certificates} />
+          <ProjectsSection projects={projects} />
           <TestimonialsSection testimonials={testimonials} /> <BlogSection posts={posts} />
           <ContactSection profile={profile} />
         </div>

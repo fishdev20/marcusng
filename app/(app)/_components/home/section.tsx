@@ -53,7 +53,7 @@ export function Section({
 }) {
   const defaultLabelClassName =
     labelClassName ||
-    "pt-1 font-mono text-[10px] font-medium uppercase tracking-[0.08em] text-muted-foreground";
+    "pt-1 font-mono text-md font-medium uppercase tracking-[0.08em] text-muted-foreground";
 
   if (titlePosition === "top") {
     return (
